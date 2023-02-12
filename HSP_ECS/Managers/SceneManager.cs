@@ -40,9 +40,18 @@ namespace HSP_ECS
 
         protected override void Draw(GameTime gameTime)
         {
+            //Texture2D t = Content.Load<Texture2D>("corn2");
+            SpriteBatch.Begin();
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            base.Draw(gameTime);
+            //SpriteBatch.Draw(t, new Vector2(100, 100), Color.White);
+
+            SpriteBatch.End();
+        }
+
+        public SpriteBatch SpriteBatch
+        {
+            get { return _spriteBatch; }
         }
     }
 }

@@ -9,13 +9,26 @@ namespace HSP_ECS
 {
     public class Entity
     {
-        public string mName;
+        private string mName;
         public List<Component> mComponents;
 
         public Entity(string pName)
         {
             mName= pName;
             mComponents = new List<Component>();
+        }
+
+        public void AddComponent(Component pComponent)
+        {
+            mComponents.Add(pComponent);
+        }
+
+        public string Name
+        {
+            get
+            {
+                return mName;
+            }
         }
     }
 }

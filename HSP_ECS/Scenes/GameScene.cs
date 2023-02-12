@@ -5,22 +5,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+using System.Net.Http.Headers;
 
-namespace HSP_ECS.Scenes
+namespace HSP_ECS
 {
     public class GameScene : Scene
     {
         Entity player;
 
-        public GameScene(SceneManager pSceneManager, string pName) : base(pSceneManager, pName)
+        public GameScene(SceneManager pSceneManager) : base(pSceneManager)
         {
-            player = new Entity("player");
-            ComponentPosition pos = new ComponentPosition(new Vector2(100,100));
-            player.mComponents.Add(pos);
+            mName = "GameScene";
+            player = new Entity("playor");
+
+            // Make GetComponentHelper
+
         }
 
         public override void Draw()
         {
+            mSceneManager.SpriteBatch.Begin();
+
+
+
+            mSceneManager.SpriteBatch.End();
         }
 
         public override void Update()

@@ -11,10 +11,9 @@ namespace HSP_ECS
         protected SceneManager mSceneManager;
         protected string mName;
 
-        public Scene(SceneManager pSceneManager, string pName)
+        public Scene(SceneManager pSceneManager)
         {
             mSceneManager = pSceneManager;
-            mName = pName;
         }
 
         // Scenes need a draw and update method. These are assigned as delegates in the scene manager class.
