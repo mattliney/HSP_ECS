@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Net.Http.Headers;
+using HSP_ECS.Helpers;
 
 namespace HSP_ECS
 {
@@ -17,11 +18,7 @@ namespace HSP_ECS
 
         public GameScene(SceneManager pSceneManager) : base(pSceneManager)
         {
-            mName = "GameScene";
-            player = new Entity("playor");
-
-            // Make GetComponentHelper
-
+            pSceneManager.ResourceLoader.LoadTexture("corn2");
         }
 
         public override void Draw()
@@ -33,7 +30,7 @@ namespace HSP_ECS
             mSceneManager.SpriteBatch.End();
         }
 
-        public override void Update()
+        public override void Update(GameTime pGameTime)
         {
         }
     }

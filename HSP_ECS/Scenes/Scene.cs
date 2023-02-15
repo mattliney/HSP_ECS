@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace HSP_ECS
 
         public abstract void Draw();
 
-        public abstract void Update();
+        public abstract void Update(GameTime pGameTime);
 
         public string Name
         { 
