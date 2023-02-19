@@ -15,6 +15,7 @@ namespace HSP_ECS.Components
         public ComponentSprite(Texture2D pSprite)
         {
             mSprite= pSprite;
+            mName = "ComponentSprite";
         }
 
         public Texture2D Sprite

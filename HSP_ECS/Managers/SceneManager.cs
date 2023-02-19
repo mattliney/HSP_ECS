@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System;
 using HSP_ECS.Helpers;
+using HSP_ECS.Systems;
+using System.Collections.Generic;
+using HSP_ECS.Components;
 
 namespace HSP_ECS
 {
@@ -21,9 +24,15 @@ namespace HSP_ECS
         //Delegates
         public delegate void RenderDelegate();
         public delegate void UpdateDelegate(GameTime pGameTime);
-
         public RenderDelegate Render;
         public UpdateDelegate Updater;
+        public Scene CurrentScene;
+
+        //Managers
+        SystemManager mSystemManager;
+
+        //Systems
+        SystemRender mSystemRender;
 
         public SceneManager()
         {
@@ -34,8 +43,7 @@ namespace HSP_ECS
             IsMouseVisible = true;
 
             ResourceLoader = new ResourceLoaderHelper(this);
-
-            GameScene gs = new GameScene(this);
+            mSystemManager = new SystemManager();
         }
 
         protected override void Initialize()
@@ -46,6 +54,12 @@ namespace HSP_ECS
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            CurrentScene = new GameScene(this);
+
+            Updater = CurrentScene.Update;
+            Render = CurrentScene.Draw;
+
+            CreateSystems();
         }
 
         protected override void Update(GameTime gameTime)
@@ -53,15 +67,25 @@ namespace HSP_ECS
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            Updater(gameTime);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            SpriteBatch.Begin();
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            //Texture2D t = ResourceLoader.LoadTexture("corn2");
+            //List<Entity> ent = new List<Entity>();
+            //Entity e = new Entity("john");
+            //e.AddComponent(new ComponentPosition(new Vector2(100, 100)));
+            //e.AddComponent(new ComponentSprite(t));
+            //ent.Add(e);
 
-            //SpriteBatch.Draw(t, new Vector2(100, 100), Color.White);
+            SpriteBatch.Begin();
+
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            //mSystemManager.Action(ent);
+            Render();
 
             SpriteBatch.End();
         }
@@ -69,6 +93,12 @@ namespace HSP_ECS
         public SpriteBatch SpriteBatch
         {
             get { return _spriteBatch; }
+        }
+
+        public void CreateSystems()
+        {
+            mSystemRender = new SystemRender(SpriteBatch);
+            mSystemManager.AddSystem(mSystemRender);
         }
     }
 }

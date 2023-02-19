@@ -9,25 +9,23 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Net.Http.Headers;
 using HSP_ECS.Helpers;
+using HSP_ECS.Systems;
 
 namespace HSP_ECS
 {
     public class GameScene : Scene
     {
         Entity player;
+        Texture2D t;
 
         public GameScene(SceneManager pSceneManager) : base(pSceneManager)
         {
-            pSceneManager.ResourceLoader.LoadTexture("corn2");
+            t = mSceneManager.ResourceLoader.LoadTexture("corn2");
         }
 
         public override void Draw()
         {
-            mSceneManager.SpriteBatch.Begin();
-
-
-
-            mSceneManager.SpriteBatch.End();
+            //mSceneManager.SpriteBatch.Draw(t, new Vector2(100, 100), Color.White);
         }
 
         public override void Update(GameTime pGameTime)
