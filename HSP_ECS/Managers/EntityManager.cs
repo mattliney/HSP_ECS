@@ -42,5 +42,13 @@ namespace HSP_ECS
         {
             mEntities.Remove(pEntity);
         }
+
+        public List<Entity> Entities
+        {
+            get
+            {
+                return mEntities;
+            }
+        }
     }
 }

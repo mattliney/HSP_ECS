@@ -1,24 +1,37 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HSP_ECS.Helpers
+namespace HSP_ECS
 {
     public class ResourceLoaderHelper
     {
         private ContentManager cm;
+        private Dictionary<string, Texture2D> mTextureDictionary = new Dictionary<string, Texture2D>();
         public ResourceLoaderHelper(SceneManager pSceneManager)
         {
             cm = pSceneManager.Content;
         }
 
-        public Texture2D LoadTexture(string pFileName)
+        public void LoadTexture(string pFileName)
         {
-            return cm.Load<Texture2D>(pFileName);
+            Texture2D tex = cm.Load<Texture2D>(pFileName);
+            mTextureDictionary.Add(pFileName, tex);
+        }
+
+        public Texture2D GetTexture(string pName)
+        {
+            return mTextureDictionary[pName];
+        }
+
+        public Song LoadAudio(string pFileName)
+        {
+            return cm.Load<Song>(pFileName);
         }
     }
 }

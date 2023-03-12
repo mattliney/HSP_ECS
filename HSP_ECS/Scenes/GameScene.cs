@@ -20,12 +20,12 @@ namespace HSP_ECS
 
         public GameScene(SceneManager pSceneManager) : base(pSceneManager)
         {
-            t = mSceneManager.ResourceLoader.LoadTexture("corn2");
+
         }
 
         public override void Draw()
         {
-            //mSceneManager.SpriteBatch.Draw(t, new Vector2(100, 100), Color.White);
+
         }
 
         public override void Update(GameTime pGameTime)

@@ -15,11 +15,11 @@ namespace HSP_ECS
         //Graphics Variables
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private int mScreenWidth = 1080;
-        private int mScreenHeight = 720;
+        private int mScreenWidth = 1088;
+        private int mScreenHeight = 768;
 
         //Resource Loader
-        public ResourceLoaderHelper ResourceLoader;
+        public ResourceLoaderHelper mResourceLoader;
 
         //Delegates
         public delegate void RenderDelegate();
@@ -30,9 +30,12 @@ namespace HSP_ECS
 
         //Managers
         SystemManager mSystemManager;
+        EntityManager mEntityManager;
+        InputManager mInputManager;
 
         //Systems
         SystemRender mSystemRender;
+        SystemCamera mSystemCamera;
 
         public SceneManager()
         {
@@ -42,8 +45,12 @@ namespace HSP_ECS
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            ResourceLoader = new ResourceLoaderHelper(this);
+            mResourceLoader = new ResourceLoaderHelper(this);
             mSystemManager = new SystemManager();
+            mEntityManager = new EntityManager();
+            mInputManager = new InputManager(this);
+
+            CameraHelper.CameraInit(mScreenWidth);
         }
 
         protected override void Initialize()
@@ -55,6 +62,10 @@ namespace HSP_ECS
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentScene = new GameScene(this);
+            mResourceLoader.LoadTexture("grass");
+            mResourceLoader.LoadTexture("grassbottom");
+            mResourceLoader.LoadTexture("grasstop");
+            MapLoaderHelper.LoadTextMap("Maps/Text/map2.txt", mEntityManager, mResourceLoader);
 
             Updater = CurrentScene.Update;
             Render = CurrentScene.Draw;
@@ -84,7 +95,9 @@ namespace HSP_ECS
             SpriteBatch.Begin();
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            //mSystemManager.Action(ent);
+            mSystemManager.Action(mEntityManager.Entities);
+            mInputManager.ProcessInputs();
+
             Render();
 
             SpriteBatch.End();
@@ -99,6 +112,8 @@ namespace HSP_ECS
         {
             mSystemRender = new SystemRender(SpriteBatch);
             mSystemManager.AddSystem(mSystemRender);
+            mSystemCamera = new SystemCamera();
+            mSystemManager.AddSystem(mSystemCamera);
         }
     }
 }
