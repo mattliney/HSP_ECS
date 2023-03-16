@@ -1,4 +1,6 @@
 ﻿using HSP_ECS.Components;
+using HSP_ECS.Helpers;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace HSP_ECS
             mName = "SystemCamera";
         }
 
-        public override void SystemAction(List<Entity> pEntities)
+        public override void SystemAction(List<Entity> pEntities, GameTime pGameTime)
         {
             foreach(Entity e in pEntities)
             {
@@ -26,7 +28,7 @@ namespace HSP_ECS
                     pos = (ComponentPosition)GetComponentHelper.GetComponent(mPosComponent, e);
                     if (pos != null)
                     {
-                        pos.Position += CameraHelper.cameraMovement;
+                        pos.Position += TimeStepHelper.CalculateStepVector(CameraHelper.cameraMovement, pGameTime);
                     }
                 }
             }

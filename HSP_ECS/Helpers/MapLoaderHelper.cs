@@ -89,6 +89,13 @@ namespace HSP_ECS
             }
 
             sr.Close();
+
+            Entity en = new Entity("john");
+            en.AddComponent(new ComponentSprite(pResources.GetTexture("grassbottom")));
+            en.AddComponent(new ComponentPosition(new Vector2(0, 300)));
+            en.AddComponent(new ComponentVelocity(new Vector2(10, 0)));
+
+            pEM.AddEntity(en);
         }
 
         private static bool ValidCoordChecker(int pX, int pY, int pArrayWidth, int pArrayHeight)

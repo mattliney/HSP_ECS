@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +16,7 @@ namespace HSP_ECS
 
         }
 
-        public virtual void SystemAction(List<Entity> pEntities)
-        {
-            // Every System Must Implement This!
-        }
+        public abstract void SystemAction(List<Entity> pEntities, GameTime pGameTime);
 
         public string Name
         {

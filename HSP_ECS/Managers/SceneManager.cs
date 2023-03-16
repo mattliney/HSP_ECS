@@ -36,6 +36,7 @@ namespace HSP_ECS
         //Systems
         SystemRender mSystemRender;
         SystemCamera mSystemCamera;
+        SystemPhysics mSystemPhysics;
 
         public SceneManager()
         {
@@ -95,7 +96,7 @@ namespace HSP_ECS
             SpriteBatch.Begin();
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            mSystemManager.Action(mEntityManager.Entities);
+            mSystemManager.Action(mEntityManager.Entities, gameTime);
             mInputManager.ProcessInputs();
 
             Render();
@@ -114,6 +115,8 @@ namespace HSP_ECS
             mSystemManager.AddSystem(mSystemRender);
             mSystemCamera = new SystemCamera();
             mSystemManager.AddSystem(mSystemCamera);
+            mSystemPhysics = new SystemPhysics();
+            mSystemManager.AddSystem(mSystemPhysics);
         }
     }
 }

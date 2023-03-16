@@ -1,27 +1,27 @@
 ﻿using HSP_ECS.Components;
-using Microsoft.Xna.Framework.Graphics;
+using HSP_ECS.Helpers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HSP_ECS.Systems
+namespace HSP_ECS
 {
-    public class SystemRender : System
+    public class SystemPhysics : System
     {
         private string mPosComponent = "ComponentPosition";
-        private string mSpriteComponent = "ComponentSprite";
+        private string mVelComponent = "ComponentVelocity";
         private SpriteBatch sb;
 
         private ComponentPosition pos;
-        private ComponentSprite sprite;
+        private ComponentVelocity vel;
 
-        public SystemRender(SpriteBatch pSpriteBatch)
+        public SystemPhysics()
         {
-            mName = "SystemRender";
-            sb= pSpriteBatch;
+            mName = "SystemPhysics";
         }
 
         public override void SystemAction(List<Entity> pEntities, GameTime pGameTime)
@@ -29,12 +29,12 @@ namespace HSP_ECS.Systems
             foreach(Entity e in pEntities)
             {
                 pos = (ComponentPosition)GetComponentHelper.GetComponent(mPosComponent, e);
-                if(pos != null)
+                if (pos != null)
                 {
-                    sprite = (ComponentSprite)GetComponentHelper.GetComponent(mSpriteComponent, e);
-                    if(sprite != null)
+                    vel = (ComponentVelocity)GetComponentHelper.GetComponent(mVelComponent, e);
+                    if (vel != null)
                     {
-                        sb.Draw(sprite.Sprite, pos.Position, Color.White);
+                        pos.Position += TimeStepHelper.CalculateStepVector(vel.Velocity, pGameTime);
                     }
                 }
             }

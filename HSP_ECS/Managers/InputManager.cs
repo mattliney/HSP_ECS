@@ -28,11 +28,11 @@ namespace HSP_ECS
 
             if (ks.IsKeyDown(Keys.A))
             {
-                CameraHelper.cameraMovement = new Vector2(10, 0);
+                CameraHelper.cameraMovement = new Vector2(500, 0);
             }
             else if (ks.IsKeyDown(Keys.D))
             {
-                CameraHelper.cameraMovement = new Vector2(-10, 0);
+                CameraHelper.cameraMovement = new Vector2(-500, 0);
             }
             else
             {

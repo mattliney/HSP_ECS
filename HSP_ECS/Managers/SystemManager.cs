@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,11 @@ namespace HSP_ECS
             mSystems = new List<System>();
         }
 
-        public void Action(List<Entity> pEntities)
+        public void Action(List<Entity> pEntities, GameTime pGameTime)
         {
             foreach (System s in mSystems)
             {
-                s.SystemAction(pEntities);
+                s.SystemAction(pEntities, pGameTime);
             }
         }
 
