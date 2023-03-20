@@ -66,7 +66,10 @@ namespace HSP_ECS
             mResourceLoader.LoadTexture("grass");
             mResourceLoader.LoadTexture("grassbottom");
             mResourceLoader.LoadTexture("grasstop");
+            mResourceLoader.LoadTexture("playerTemp");
             MapLoaderHelper.LoadTextMap("Maps/Text/map2.txt", mEntityManager, mResourceLoader);
+
+            mInputManager.GetPlayer(mEntityManager);
 
             Updater = CurrentScene.Update;
             Render = CurrentScene.Draw;
@@ -86,13 +89,6 @@ namespace HSP_ECS
 
         protected override void Draw(GameTime gameTime)
         {
-            //Texture2D t = ResourceLoader.LoadTexture("corn2");
-            //List<Entity> ent = new List<Entity>();
-            //Entity e = new Entity("john");
-            //e.AddComponent(new ComponentPosition(new Vector2(100, 100)));
-            //e.AddComponent(new ComponentSprite(t));
-            //ent.Add(e);
-
             SpriteBatch.Begin();
 
             GraphicsDevice.Clear(Color.CornflowerBlue);

@@ -21,6 +21,7 @@ namespace HSP_ECS
 
         public override void SystemAction(List<Entity> pEntities, GameTime pGameTime)
         {
+            CameraHelper.CameraUpdate();
             foreach(Entity e in pEntities)
             {
                 if(e.Name != "player")

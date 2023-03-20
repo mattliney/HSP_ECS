@@ -25,9 +25,9 @@ namespace HSP_ECS
             rightSideBounds = halfWidth + 50;
         }
 
-        public static void CameraUpdate(Vector2 pMove)
+        public static void CameraUpdate()
         {
-            leftSideOfScreen -= pMove;
+            leftSideOfScreen -= cameraMovement;
         }
     }
 }

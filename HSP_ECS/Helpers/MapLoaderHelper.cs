@@ -90,10 +90,10 @@ namespace HSP_ECS
 
             sr.Close();
 
-            Entity en = new Entity("john");
-            en.AddComponent(new ComponentSprite(pResources.GetTexture("grassbottom")));
+            Entity en = new Entity("player");
+            en.AddComponent(new ComponentSprite(pResources.GetTexture("playerTemp")));
             en.AddComponent(new ComponentPosition(new Vector2(0, 300)));
-            en.AddComponent(new ComponentVelocity(new Vector2(10, 0)));
+            en.AddComponent(new ComponentVelocity(new Vector2(0, 0)));
 
             pEM.AddEntity(en);
         }
