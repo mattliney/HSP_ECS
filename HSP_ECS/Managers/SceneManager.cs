@@ -32,6 +32,7 @@ namespace HSP_ECS
         SystemManager mSystemManager;
         EntityManager mEntityManager;
         InputManager mInputManager;
+        CollisionManager mCollisionManager;
 
         //Systems
         SystemRender mSystemRender;
@@ -50,6 +51,7 @@ namespace HSP_ECS
             mSystemManager = new SystemManager();
             mEntityManager = new EntityManager();
             mInputManager = new InputManager(this);
+            mCollisionManager = new CollisionManager(mEntityManager);
 
             CameraHelper.CameraInit(mScreenWidth);
         }

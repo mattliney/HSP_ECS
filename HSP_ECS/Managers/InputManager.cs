@@ -15,10 +15,12 @@ namespace HSP_ECS
         private Entity mPlayer;
         private ComponentVelocity mPlayerVel;
         private ComponentPosition mPlayerPos;
+        private int mSpeed;
 
         public InputManager(SceneManager pSceneManager)
         {
             mSceneManager = pSceneManager;
+            mSpeed = 400;
         }
 
         public void GetPlayer(EntityManager pEntityManager)
@@ -48,26 +50,26 @@ namespace HSP_ECS
             {
                 if (mPlayerPos.Position.X > CameraHelper.leftSideBounds || CameraHelper.leftSideOfScreen.X <= 0)
                 {
-                    mPlayerVel.Velocity = new Vector2(-200, 0);
+                    mPlayerVel.Velocity = new Vector2(-mSpeed, 0);
                     CameraHelper.cameraMovement = new Vector2(0, 0);
                 }
                 else
                 {
                     mPlayerVel.Velocity = new Vector2(0, 0);
-                    CameraHelper.cameraMovement = new Vector2(500, 0);
+                    CameraHelper.cameraMovement = new Vector2(mSpeed, 0);
                 }
             }
             else if (ks.IsKeyDown(Keys.D))
             {
                 if (mPlayerPos.Position.X < CameraHelper.rightSideBounds)
                 {
-                    mPlayerVel.Velocity = new Vector2(200, 0);
+                    mPlayerVel.Velocity = new Vector2(mSpeed, 0);
                     CameraHelper.cameraMovement = new Vector2(0, 0);
                 }
                 else
                 {
                     mPlayerVel.Velocity = new Vector2(0, 0);
-                    CameraHelper.cameraMovement = new Vector2(-500, 0);
+                    CameraHelper.cameraMovement = new Vector2(-mSpeed, 0);
                 }
             }
             else

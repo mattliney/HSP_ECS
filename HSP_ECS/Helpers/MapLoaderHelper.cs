@@ -65,6 +65,7 @@ namespace HSP_ECS
                         }
                         pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
                         e.AddComponent(sp); e.AddComponent(pos);
+                        e.AddComponent(new ComponentCollisionAABB(64, 64));
                         pEM.AddEntity(e);
                     }
                     else if (array[x,y] == 'O')
@@ -77,6 +78,7 @@ namespace HSP_ECS
                                 sp = new ComponentSprite(pResources.GetTexture("grasstop"));
                                 pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
                                 e.AddComponent(sp); e.AddComponent(pos);
+                                e.AddComponent(new ComponentCollisionAABB(64, 64));
                                 pEM.AddEntity(e);
                             }
                         }
@@ -94,6 +96,7 @@ namespace HSP_ECS
             en.AddComponent(new ComponentSprite(pResources.GetTexture("playerTemp")));
             en.AddComponent(new ComponentPosition(new Vector2(0, 300)));
             en.AddComponent(new ComponentVelocity(new Vector2(0, 0)));
+            en.AddComponent(new ComponentCollisionAABB(64, 64));
 
             pEM.AddEntity(en);
         }
