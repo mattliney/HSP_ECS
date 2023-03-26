@@ -38,6 +38,7 @@ namespace HSP_ECS
         SystemRender mSystemRender;
         SystemCamera mSystemCamera;
         SystemPhysics mSystemPhysics;
+        SystemCollisionAABBAABB mSystemCollisionAABBAABB;
 
         public SceneManager()
         {
@@ -77,6 +78,8 @@ namespace HSP_ECS
             Render = CurrentScene.Draw;
 
             CreateSystems();
+
+            mSystemCollisionAABBAABB.stupid(mEntityManager.Entities);
         }
 
         protected override void Update(GameTime gameTime)
@@ -115,6 +118,8 @@ namespace HSP_ECS
             mSystemManager.AddSystem(mSystemCamera);
             mSystemPhysics = new SystemPhysics();
             mSystemManager.AddSystem(mSystemPhysics);
+            mSystemCollisionAABBAABB = new SystemCollisionAABBAABB(mCollisionManager);
+            mSystemManager.AddSystem(mSystemCollisionAABBAABB);
         }
     }
 }

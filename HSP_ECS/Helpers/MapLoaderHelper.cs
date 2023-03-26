@@ -78,7 +78,6 @@ namespace HSP_ECS
                                 sp = new ComponentSprite(pResources.GetTexture("grasstop"));
                                 pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
                                 e.AddComponent(sp); e.AddComponent(pos);
-                                e.AddComponent(new ComponentCollisionAABB(64, 64));
                                 pEM.AddEntity(e);
                             }
                         }

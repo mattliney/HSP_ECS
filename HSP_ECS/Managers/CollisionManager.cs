@@ -15,7 +15,10 @@ namespace HSP_ECS
 
     public enum CollisionType
     {
-        AABB_AABB,
+        AABB_AABB_LEFT,
+        AABB_AABB_RIGHT,
+        AABB_AABB_TOP,
+        AABB_AABB_BOTTOM,
         POINT_AABB
     }
 
@@ -34,9 +37,21 @@ namespace HSP_ECS
         {
             foreach(Collision col in mCollisionManifold)
             {
-                if(col.type == CollisionType.AABB_AABB)
+                if(col.type == CollisionType.AABB_AABB_LEFT)
                 {
-                    RespondAABB_AABB(col);
+                    RespondAABB_AABB_Left(col);
+                }
+                else if(col.type == CollisionType.AABB_AABB_RIGHT)
+                {
+                    RespondAABB_AABB_Right(col);
+                }
+                else if (col.type == CollisionType.AABB_AABB_BOTTOM)
+                {
+                    RespondAABB_AABB_Bottom(col);
+                }
+                else if (col.type == CollisionType.AABB_AABB_TOP)
+                {
+                    RespondAABB_AABB_Top(col);
                 }
                 else if(col.type == CollisionType.POINT_AABB)
                 {
@@ -47,7 +62,22 @@ namespace HSP_ECS
             ClearManifold();
         }
 
-        private void RespondAABB_AABB(Collision pCol)
+        private void RespondAABB_AABB_Top(Collision pCol)
+        {
+
+        }
+
+        private void RespondAABB_AABB_Right(Collision pCol)
+        {
+
+        }
+
+        private void RespondAABB_AABB_Bottom(Collision pCol)
+        {
+
+        }
+
+        private void RespondAABB_AABB_Left(Collision pCol)
         {
 
         }
@@ -60,6 +90,11 @@ namespace HSP_ECS
         private void ClearManifold()
         {
             mCollisionManifold.Clear();
+        }
+
+        public void RegisterCollision(Collision pCol)
+        {
+            mCollisionManifold.Add(pCol);
         }
     }
 }

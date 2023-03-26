@@ -16,6 +16,7 @@ namespace HSP_ECS
         {
             mWidth= pWidth;
             mHeight= pHeight;
+            mName = "ComponentCollisionAABB";
         }
 
         public int Width
