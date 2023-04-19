@@ -22,7 +22,7 @@ namespace HSP_ECS
 
             int halfWidth = pScreenWidth / 2;
             leftSideBounds = halfWidth - 50;
-            rightSideBounds = halfWidth + 50;
+            rightSideBounds = halfWidth;
         }
 
         public static void CameraUpdate()

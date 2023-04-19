@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HSP_ECS.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,22 +65,42 @@ namespace HSP_ECS
 
         private void RespondAABB_AABB_Top(Collision pCol)
         {
+            ComponentPosition e1pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity1);
+            ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
 
+            ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
+
+            e1pos.SetY(e2pos.Position.Y - (e2coll.Height - 1));
         }
 
         private void RespondAABB_AABB_Right(Collision pCol)
         {
+            ComponentPosition e1pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity1);
+            ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
 
+            ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
+
+            e1pos.SetX(e2pos.Position.X + (e2coll.Width));
         }
 
         private void RespondAABB_AABB_Bottom(Collision pCol)
         {
+            ComponentPosition e1pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity1);
+            ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
 
+            ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
+
+            e1pos.SetY(e2pos.Position.Y + (e2coll.Height));
         }
 
         private void RespondAABB_AABB_Left(Collision pCol)
         {
+            ComponentPosition e1pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity1);
+            ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
 
+            ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
+
+            e1pos.SetX(e2pos.Position.X - (e2coll.Width));
         }
 
         private void RespondPoint_AABB(Collision pCol)

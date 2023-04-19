@@ -22,5 +22,15 @@ namespace HSP_ECS.Components
             get { return mPosition; }
             set { mPosition = value; }
         }
+
+        public void SetY(float pY)
+        {
+            mPosition.Y = pY;
+        }
+        
+        public void SetX(float pX)
+        {
+            mPosition.X = pX;
+        }
     }
 }

@@ -13,11 +13,10 @@ namespace HSP_ECS
     public class SystemPhysics : System
     {
         private string mPosComponent = "ComponentPosition";
-        private string mVelComponent = "ComponentVelocity";
-        private SpriteBatch sb;
+        private string mPhysComponent = "ComponentPhysics";
 
         private ComponentPosition pos;
-        private ComponentVelocity vel;
+        private ComponentPhysics phys;
 
         public SystemPhysics()
         {
@@ -31,13 +30,21 @@ namespace HSP_ECS
                 pos = (ComponentPosition)GetComponentHelper.GetComponent(mPosComponent, e);
                 if (pos != null)
                 {
-                    vel = (ComponentVelocity)GetComponentHelper.GetComponent(mVelComponent, e);
-                    if (vel != null)
+                    phys = (ComponentPhysics)GetComponentHelper.GetComponent(mPhysComponent, e);
+                    if (phys != null)
                     {
-                        pos.Position += TimeStepHelper.CalculateStepVector(vel.Velocity, pGameTime);
+                        GravityCalc();
+                        pos.Position += TimeStepHelper.CalculateStepVector(phys.Velocity, pGameTime);
                     }
                 }
             }
+        }
+
+        private void GravityCalc()
+        {
+            float newY = phys.Velocity.Y;
+            newY += phys.Gravity;
+            phys.SetVelY(newY);
         }
     }
 }

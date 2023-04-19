@@ -18,7 +18,7 @@ namespace HSP_ECS
         private ComponentPosition mPosition;
 
         // get list of player and enemies
-        List<Entity> mCollidables = new List<Entity>();
+        List<Entity> mPhysObjs = new List<Entity>();
 
         // temp
         Entity mPlayer;
@@ -33,31 +33,30 @@ namespace HSP_ECS
         {
             foreach(Entity e in plist)
             {
-                if(e.Name == "player")
+                ComponentPhysics phys = (ComponentPhysics)GetComponentHelper.GetComponent("ComponentPhysics", e);
+                if (phys != null)
                 {
-                    mPlayer= e;
+                    mPhysObjs.Add(e);
                 }
             }
         }
 
         public override void SystemAction(List<Entity> pEntities, GameTime pGameTime)
         {
-            //foreach(Entity collidable in mCollidables)
-            //{
-
-            //}
-
-            foreach(Entity e in pEntities)
+            foreach(Entity physObj in mPhysObjs)
             {
-                mPosition = (ComponentPosition)GetComponentHelper.GetComponent(mPosComponent, e);
-
-                if(mPosition != null && e != mPlayer)
+                foreach (Entity e in pEntities)
                 {
-                    mCollision = (ComponentCollisionAABB)GetComponentHelper.GetComponent(mCollisionComponent, e);
+                    mPosition = (ComponentPosition)GetComponentHelper.GetComponent(mPosComponent, e);
 
-                    if(mCollision != null)
+                    if (mPosition != null && e != physObj)
                     {
-                        Collide(mPlayer, e);
+                        mCollision = (ComponentCollisionAABB)GetComponentHelper.GetComponent(mCollisionComponent, e);
+
+                        if (mCollision != null)
+                        {
+                            Collide(physObj, e);
+                        }
                     }
                 }
             }

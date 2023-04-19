@@ -94,7 +94,7 @@ namespace HSP_ECS
             Entity en = new Entity("player");
             en.AddComponent(new ComponentSprite(pResources.GetTexture("playerTemp")));
             en.AddComponent(new ComponentPosition(new Vector2(0, 300)));
-            en.AddComponent(new ComponentVelocity(new Vector2(0, 0)));
+            en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 10f));
             en.AddComponent(new ComponentCollisionAABB(64, 64));
 
             pEM.AddEntity(en);

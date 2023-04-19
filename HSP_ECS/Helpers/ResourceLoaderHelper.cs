@@ -33,5 +33,13 @@ namespace HSP_ECS
         {
             return cm.Load<Song>(pFileName);
         }
+
+        public void LoadAllTextures()
+        {
+            this.LoadTexture("grass");
+            this.LoadTexture("grassbottom");
+            this.LoadTexture("grasstop");
+            this.LoadTexture("playerTemp");
+        }
     }
 }

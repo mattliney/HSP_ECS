@@ -13,7 +13,7 @@ namespace HSP_ECS
     {
         private SceneManager mSceneManager;
         private Entity mPlayer;
-        private ComponentVelocity mPlayerVel;
+        private ComponentPhysics mPlayerPhys;
         private ComponentPosition mPlayerPos;
         private int mSpeed;
 
@@ -30,7 +30,7 @@ namespace HSP_ECS
                 if(e.Name == "player")
                 {
                     mPlayer = e;
-                    mPlayerVel = (ComponentVelocity)GetComponentHelper.GetComponent("ComponentVelocity", e);
+                    mPlayerPhys = (ComponentPhysics)GetComponentHelper.GetComponent("ComponentPhysics", e);
                     mPlayerPos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", e);
                     return;
                 }
@@ -43,19 +43,19 @@ namespace HSP_ECS
 
             if (ks.IsKeyDown(Keys.W))
             {
-                // jump!
+                mPlayerPhys.SetVelY(-mSpeed);
             }
 
             if (ks.IsKeyDown(Keys.A))
             {
                 if (mPlayerPos.Position.X > CameraHelper.leftSideBounds || CameraHelper.leftSideOfScreen.X <= 0)
                 {
-                    mPlayerVel.Velocity = new Vector2(-mSpeed, 0);
+                    mPlayerPhys.SetVelX(-mSpeed);
                     CameraHelper.cameraMovement = new Vector2(0, 0);
                 }
                 else
                 {
-                    mPlayerVel.Velocity = new Vector2(0, 0);
+                    mPlayerPhys.SetVelX(0);
                     CameraHelper.cameraMovement = new Vector2(mSpeed, 0);
                 }
             }
@@ -63,19 +63,19 @@ namespace HSP_ECS
             {
                 if (mPlayerPos.Position.X < CameraHelper.rightSideBounds)
                 {
-                    mPlayerVel.Velocity = new Vector2(mSpeed, 0);
+                    mPlayerPhys.SetVelX(mSpeed);
                     CameraHelper.cameraMovement = new Vector2(0, 0);
                 }
                 else
                 {
-                    mPlayerVel.Velocity = new Vector2(0, 0);
+                    mPlayerPhys.SetVelX(0);
                     CameraHelper.cameraMovement = new Vector2(-mSpeed, 0);
                 }
             }
             else
             {
                 CameraHelper.cameraMovement = new Vector2(0, 0);
-                mPlayerVel.Velocity = new Vector2(0, 0);
+                mPlayerPhys.SetVelX(0);
             }
         }
     }

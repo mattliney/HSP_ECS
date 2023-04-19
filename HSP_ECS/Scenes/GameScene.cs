@@ -15,12 +15,18 @@ namespace HSP_ECS
 {
     public class GameScene : Scene
     {
-        Entity player;
-        Texture2D t;
+        Entity mPlayer;
 
-        public GameScene(SceneManager pSceneManager) : base(pSceneManager)
+
+        public GameScene(SceneManager pSceneManager, string pLevelName) : base(pSceneManager)
         {
+            // game scene will need to get the file name for the map and then load it.
+            MapLoaderHelper.LoadTextMap(pLevelName, mSceneManager.mEntityManager, mSceneManager.mResourceLoader);
 
+            // input manager needs to find the player in the list in order to move him.
+            mSceneManager.mInputManager.GetPlayer(mSceneManager.mEntityManager);
+
+            mPlayer = mSceneManager.mEntityManager.GetEntity("player");
         }
 
         public override void Draw()

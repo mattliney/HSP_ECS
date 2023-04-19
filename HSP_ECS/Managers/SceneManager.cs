@@ -29,16 +29,16 @@ namespace HSP_ECS
         public Scene CurrentScene;
 
         //Managers
-        SystemManager mSystemManager;
-        EntityManager mEntityManager;
-        InputManager mInputManager;
-        CollisionManager mCollisionManager;
+        public SystemManager mSystemManager;
+        public EntityManager mEntityManager;
+        public InputManager mInputManager;
+        public CollisionManager mCollisionManager;
 
         //Systems
-        SystemRender mSystemRender;
-        SystemCamera mSystemCamera;
-        SystemPhysics mSystemPhysics;
-        SystemCollisionAABBAABB mSystemCollisionAABBAABB;
+        public SystemRender mSystemRender;
+        public SystemCamera mSystemCamera;
+        public SystemPhysics mSystemPhysics;
+        public SystemCollisionAABBAABB mSystemCollisionAABBAABB;
 
         public SceneManager()
         {
@@ -65,20 +65,15 @@ namespace HSP_ECS
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            CurrentScene = new GameScene(this);
-            mResourceLoader.LoadTexture("grass");
-            mResourceLoader.LoadTexture("grassbottom");
-            mResourceLoader.LoadTexture("grasstop");
-            mResourceLoader.LoadTexture("playerTemp");
-            MapLoaderHelper.LoadTextMap("Maps/Text/map2.txt", mEntityManager, mResourceLoader);
-
-            mInputManager.GetPlayer(mEntityManager);
+            mResourceLoader.LoadAllTextures();
+            CurrentScene = new GameScene(this, "Maps/Text/map2.txt");
 
             Updater = CurrentScene.Update;
             Render = CurrentScene.Draw;
 
             CreateSystems();
 
+            // temp
             mSystemCollisionAABBAABB.stupid(mEntityManager.Entities);
         }
 
@@ -88,6 +83,7 @@ namespace HSP_ECS
                 Exit();
 
             Updater(gameTime);
+            mCollisionManager.ProcessCollisions();
 
             base.Update(gameTime);
         }
