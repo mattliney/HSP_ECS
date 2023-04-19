@@ -96,6 +96,9 @@ namespace HSP_ECS
             en.AddComponent(new ComponentPosition(new Vector2(0, 300)));
             en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 10f));
             en.AddComponent(new ComponentCollisionAABB(64, 64));
+            en.AddComponent(new ComponentCollisionPoint(new Vector2(32, 66)));
+            en.AddComponent(new ComponentCollisionPoint(new Vector2(49, 66)));
+            en.AddComponent(new ComponentCollisionPoint(new Vector2(10, 66)));
 
             pEM.AddEntity(en);
         }

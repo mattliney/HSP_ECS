@@ -39,6 +39,7 @@ namespace HSP_ECS
         public SystemCamera mSystemCamera;
         public SystemPhysics mSystemPhysics;
         public SystemCollisionAABBAABB mSystemCollisionAABBAABB;
+        public SystemCollisionAABBPoint mSystemCollisionAABBPoint;
 
         public SceneManager()
         {
@@ -75,6 +76,7 @@ namespace HSP_ECS
 
             // temp
             mSystemCollisionAABBAABB.GetPhysicsObjects(mEntityManager.Entities);
+            mSystemCollisionAABBPoint.GetPhysicsObjects(mEntityManager.Entities);
         }
 
         protected override void Update(GameTime gameTime)
@@ -93,8 +95,8 @@ namespace HSP_ECS
             SpriteBatch.Begin();
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            mSystemManager.Action(mEntityManager.Entities, gameTime);
             mInputManager.ProcessInputs();
+            mSystemManager.Action(mEntityManager.Entities, gameTime);
 
             Render();
 
@@ -110,12 +112,18 @@ namespace HSP_ECS
         {
             mSystemRender = new SystemRender(SpriteBatch);
             mSystemManager.AddSystem(mSystemRender);
+
             mSystemCamera = new SystemCamera();
             mSystemManager.AddSystem(mSystemCamera);
+
             mSystemPhysics = new SystemPhysics();
             mSystemManager.AddSystem(mSystemPhysics);
+
             mSystemCollisionAABBAABB = new SystemCollisionAABBAABB(mCollisionManager);
             mSystemManager.AddSystem(mSystemCollisionAABBAABB);
+
+            mSystemCollisionAABBPoint = new SystemCollisionAABBPoint(mCollisionManager);
+            mSystemManager.AddSystem(mSystemCollisionAABBPoint);
         }
     }
 }

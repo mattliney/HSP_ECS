@@ -14,6 +14,7 @@ namespace HSP_ECS
 
         public ComponentCollisionPoint(Vector2 pPoint)
         {
+            mName = "ComponentCollisionPoint";
             mPoint= pPoint;
         }
 

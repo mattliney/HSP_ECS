@@ -70,26 +70,28 @@ namespace HSP_ECS
 
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
-            e1pos.SetY(e2pos.Position.Y - (e2coll.Height - 1));
+            e1pos.SetY(e2pos.Position.Y - (e2coll.Height - 2));
         }
 
         private void RespondAABB_AABB_Right(Collision pCol)
         {
             ComponentPosition e1pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity1);
-            ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
 
+            ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
-            e1pos.SetX(e2pos.Position.X + (e2coll.Width));
+            e1pos.SetX(e2pos.Position.X + (e2coll.Width + 1));
         }
 
         private void RespondAABB_AABB_Bottom(Collision pCol)
         {
             ComponentPosition e1pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity1);
-            ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
+            ComponentPhysics e1Phys = (ComponentPhysics)GetComponentHelper.GetComponent("ComponentPhysics", pCol.entity1);
 
+            ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
+            e1Phys.SetVelY(0);
             e1pos.SetY(e2pos.Position.Y + (e2coll.Height));
         }
 
@@ -100,12 +102,20 @@ namespace HSP_ECS
 
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
-            e1pos.SetX(e2pos.Position.X - (e2coll.Width));
+            e1pos.SetX(e2pos.Position.X - (e2coll.Width + 1));
         }
 
         private void RespondPoint_AABB(Collision pCol)
         {
+            if(pCol.entity1.Name == "cursor")
+            {
 
+            }
+            else
+            {
+                ComponentPhysics phys = (ComponentPhysics)GetComponentHelper.GetComponent("ComponentPhysics", pCol.entity1);
+                phys.StopAccel();
+            }
         }
 
         private void ClearManifold()

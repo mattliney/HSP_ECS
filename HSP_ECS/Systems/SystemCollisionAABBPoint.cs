@@ -48,7 +48,7 @@ namespace HSP_ECS
 
                     if (mCollisionAABB != null && e != physObj)
                     {
-                        mCollisionPoint = (ComponentCollisionPoint)GetComponentHelper.GetComponent(mPointCollision, e);
+                        mCollisionPoint = (ComponentCollisionPoint)GetComponentHelper.GetComponent(mPointCollision, physObj);
 
                         if (mCollisionPoint != null)
                         {
@@ -72,6 +72,7 @@ namespace HSP_ECS
             }
 
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent(mAABBCollision, pEntity2);
+            ComponentPosition e1pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pEntity1);
             ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pEntity2);
 
             Vector2 collisionTopLeft = e2pos.Position;
@@ -79,7 +80,7 @@ namespace HSP_ECS
 
             foreach(ComponentCollisionPoint p in points)
             {
-                Vector2 point = p.Point;
+                Vector2 point = new Vector2(p.Point.X + e1pos.Position.X, p.Point.Y + e1pos.Position.Y);
 
                 if (point.X >= collisionTopLeft.X && point.X <= collisionBottomRight.X)
                 {
@@ -94,6 +95,14 @@ namespace HSP_ECS
                     }
                 }
             }
+
+            if(pEntity1.Name != "cursor")
+            {
+                // check to see if the checks all fail. in this case, we turn gravity on assuming the entity is not touching the floor.
+                ComponentPhysics phys = (ComponentPhysics)GetComponentHelper.GetComponent("ComponentPhysics", pEntity1);
+                phys.RestartAccel();
+            }
+
         }
     }
 }
