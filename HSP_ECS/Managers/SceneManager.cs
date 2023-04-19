@@ -74,7 +74,7 @@ namespace HSP_ECS
             CreateSystems();
 
             // temp
-            mSystemCollisionAABBAABB.stupid(mEntityManager.Entities);
+            mSystemCollisionAABBAABB.GetPhysicsObjects(mEntityManager.Entities);
         }
 
         protected override void Update(GameTime gameTime)

@@ -20,16 +20,13 @@ namespace HSP_ECS
         // get list of player and enemies
         List<Entity> mPhysObjs = new List<Entity>();
 
-        // temp
-        Entity mPlayer;
-
         public SystemCollisionAABBAABB(CollisionManager pCollisionManager)
         {
             mName = "SystemCollisionAABB_AABB";
             mCollisionManager = pCollisionManager;
         }
 
-        public void stupid(List<Entity> plist)
+        public void GetPhysicsObjects(List<Entity> plist)
         {
             foreach(Entity e in plist)
             {
