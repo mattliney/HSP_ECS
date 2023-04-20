@@ -94,11 +94,11 @@ namespace HSP_ECS
         {
             SpriteBatch.Begin();
 
+            Render();
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
             mInputManager.ProcessInputs();
             mSystemManager.Action(mEntityManager.Entities, gameTime);
-
-            Render();
 
             SpriteBatch.End();
         }
@@ -106,6 +106,16 @@ namespace HSP_ECS
         public SpriteBatch SpriteBatch
         {
             get { return _spriteBatch; }
+        }
+
+        public int ScreenWidth
+        {
+            get { return mScreenWidth; }
+        }
+
+        public int ScreenHeight
+        {
+            get { return mScreenHeight; }
         }
 
         public void CreateSystems()

@@ -43,6 +43,47 @@ namespace HSP_ECS
 
             // Create the entities based on what is above them.
 
+            ComponentSprite background;
+            ComponentPosition position;
+            ComponentParallax parallax;
+            Entity backSprite;
+
+            background = new ComponentSprite(pResources.GetTexture("background_grass_far"));
+            position = new ComponentPosition(new Vector2(0, 100));
+            parallax = new ComponentParallax(0.5f);
+            backSprite = new Entity("parallaxFar1");
+            backSprite.AddComponent(background);
+            backSprite.AddComponent(position);
+            backSprite.AddComponent(parallax);
+            pEM.AddEntity(backSprite);
+
+            background = new ComponentSprite(pResources.GetTexture("background_grass_far"));
+            position = new ComponentPosition(new Vector2(1088, 100));
+            parallax = new ComponentParallax(0.5f);
+            backSprite = new Entity("parallaxFar2");
+            backSprite.AddComponent(background);
+            backSprite.AddComponent(position);
+            backSprite.AddComponent(parallax);
+            pEM.AddEntity(backSprite);
+
+            background = new ComponentSprite(pResources.GetTexture("background_grass_near"));
+            position = new ComponentPosition(new Vector2(0, 100));
+            parallax = new ComponentParallax(0.7f);
+            backSprite = new Entity("parallaxNear1");
+            backSprite.AddComponent(background);
+            backSprite.AddComponent(position);
+            backSprite.AddComponent(parallax);
+            pEM.AddEntity(backSprite);
+
+            background = new ComponentSprite(pResources.GetTexture("background_grass_near"));
+            position = new ComponentPosition(new Vector2(1088, 100));
+            parallax = new ComponentParallax(0.7f);
+            backSprite = new Entity("parallaxNear2");
+            backSprite.AddComponent(background);
+            backSprite.AddComponent(position);
+            backSprite.AddComponent(parallax);
+            pEM.AddEntity(backSprite);
+
             ComponentSprite sp;
             ComponentPosition pos;
             Entity e;

@@ -12,7 +12,9 @@ namespace HSP_ECS
     public class SystemCamera : System
     {
         private string mPosComponent = "ComponentPosition";
+        private string mParallaxComponent = "ComponentParallax";
         private ComponentPosition pos;
+        private ComponentParallax par;
 
         public SystemCamera()
         {
@@ -29,7 +31,19 @@ namespace HSP_ECS
                     pos = (ComponentPosition)GetComponentHelper.GetComponent(mPosComponent, e);
                     if (pos != null)
                     {
-                        pos.Position += TimeStepHelper.CalculateStepVector(CameraHelper.cameraMovement, pGameTime);
+                        par = (ComponentParallax)GetComponentHelper.GetComponent(mParallaxComponent, e);
+
+                        if (par != null)
+                        {
+                            Vector2 next = CameraHelper.cameraMovement;
+                            next.X = next.X * par.Distance;
+
+                            pos.Position += TimeStepHelper.CalculateStepVector(next, pGameTime);
+                        }
+                        else
+                        {
+                            pos.Position += TimeStepHelper.CalculateStepVector(CameraHelper.cameraMovement, pGameTime);
+                        }
                     }
                 }
             }

@@ -41,6 +41,10 @@ namespace HSP_ECS
             this.LoadTexture("grasstop");
             this.LoadTexture("playerTemp");
             this.LoadTexture("terrain_grass");
+            this.LoadTexture("terrain_moon");
+            this.LoadTexture("terrain_sand");
+            this.LoadTexture("background_grass_far");
+            this.LoadTexture("background_grass_near");
         }
     }
 }

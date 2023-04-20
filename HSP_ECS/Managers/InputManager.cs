@@ -16,6 +16,7 @@ namespace HSP_ECS
         private ComponentPhysics mPlayerPhys;
         private ComponentPosition mPlayerPos;
         private int mSpeed;
+        private bool mNoPlayer;
 
         public InputManager(SceneManager pSceneManager)
         {
@@ -32,50 +33,59 @@ namespace HSP_ECS
                     mPlayer = e;
                     mPlayerPhys = (ComponentPhysics)GetComponentHelper.GetComponent("ComponentPhysics", e);
                     mPlayerPos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", e);
+                    mNoPlayer = false;
                     return;
                 }
             }
         }
 
+        public void ClearPlayer()
+        {
+            mPlayer = null;
+            mNoPlayer = true;
+        }
+
         public void ProcessInputs()
         {
             KeyboardState ks = Keyboard.GetState();
-
-            if (ks.IsKeyDown(Keys.W))
+            if (mNoPlayer == false)
             {
-                mPlayerPhys.SetVelY(-mSpeed);
-            }
-
-            if (ks.IsKeyDown(Keys.A))
-            {
-                if (mPlayerPos.Position.X > CameraHelper.leftSideBounds || CameraHelper.leftSideOfScreen.X <= 0)
+                if (ks.IsKeyDown(Keys.W))
                 {
-                    mPlayerPhys.SetVelX(-mSpeed);
-                    CameraHelper.cameraMovement = new Vector2(0, 0);
+                    mPlayerPhys.SetVelY(-mSpeed);
+                }
+
+                if (ks.IsKeyDown(Keys.A))
+                {
+                    if (mPlayerPos.Position.X > CameraHelper.leftSideBounds || CameraHelper.leftSideOfScreen.X <= 0)
+                    {
+                        mPlayerPhys.SetVelX(-mSpeed);
+                        CameraHelper.cameraMovement = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        mPlayerPhys.SetVelX(0);
+                        CameraHelper.cameraMovement = new Vector2(mSpeed, 0);
+                    }
+                }
+                else if (ks.IsKeyDown(Keys.D))
+                {
+                    if (mPlayerPos.Position.X < CameraHelper.rightSideBounds)
+                    {
+                        mPlayerPhys.SetVelX(mSpeed);
+                        CameraHelper.cameraMovement = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        mPlayerPhys.SetVelX(0);
+                        CameraHelper.cameraMovement = new Vector2(-mSpeed, 0);
+                    }
                 }
                 else
                 {
-                    mPlayerPhys.SetVelX(0);
-                    CameraHelper.cameraMovement = new Vector2(mSpeed, 0);
-                }
-            }
-            else if (ks.IsKeyDown(Keys.D))
-            {
-                if (mPlayerPos.Position.X < CameraHelper.rightSideBounds)
-                {
-                    mPlayerPhys.SetVelX(mSpeed);
                     CameraHelper.cameraMovement = new Vector2(0, 0);
-                }
-                else
-                {
                     mPlayerPhys.SetVelX(0);
-                    CameraHelper.cameraMovement = new Vector2(-mSpeed, 0);
                 }
-            }
-            else
-            {
-                CameraHelper.cameraMovement = new Vector2(0, 0);
-                mPlayerPhys.SetVelX(0);
             }
         }
     }
