@@ -53,14 +53,14 @@ namespace HSP_ECS
                 {
                     if (array[x, y] == 'T')
                     {
-                        sp = new ComponentSprite(pResources.GetTexture("grass"));
+                        sp = new ComponentSprite(pResources.GetTexture("terrain_grass"));
                         e = new Entity("terrain" + terrainIndex);
 
                         if (ValidCoordChecker(x, y - 1, length, 12))
                         {
                             if (array[x, y - 1] == 'T')
                             {
-                                sp = new ComponentSprite(pResources.GetTexture("grassbottom"));
+                                sp = new ComponentSprite(pResources.GetTexture("terrain_grass"));
                             }
                         }
                         pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
@@ -78,7 +78,7 @@ namespace HSP_ECS
                                 sp = new ComponentSprite(pResources.GetTexture("grasstop"));
                                 pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
                                 e.AddComponent(sp); e.AddComponent(pos);
-                                pEM.AddEntity(e);
+                                //pEM.AddEntity(e);
                             }
                         }
                     }

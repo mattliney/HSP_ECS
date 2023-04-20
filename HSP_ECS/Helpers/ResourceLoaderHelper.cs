@@ -40,6 +40,7 @@ namespace HSP_ECS
             this.LoadTexture("grassbottom");
             this.LoadTexture("grasstop");
             this.LoadTexture("playerTemp");
+            this.LoadTexture("terrain_grass");
         }
     }
 }

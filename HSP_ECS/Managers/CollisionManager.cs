@@ -70,7 +70,7 @@ namespace HSP_ECS
 
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
-            e1pos.SetY(e2pos.Position.Y - (e2coll.Height - 2));
+            e1pos.SetY(e2pos.Position.Y - (e2coll.Height + 1));
         }
 
         private void RespondAABB_AABB_Right(Collision pCol)
@@ -80,7 +80,7 @@ namespace HSP_ECS
             ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
-            e1pos.SetX(e2pos.Position.X + (e2coll.Width + 1));
+            e1pos.SetX(e2pos.Position.X + (e2coll.Width + 3));
         }
 
         private void RespondAABB_AABB_Bottom(Collision pCol)
@@ -91,7 +91,7 @@ namespace HSP_ECS
             ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
-            e1Phys.SetVelY(0);
+            //e1Phys.SetVelY(0);
             e1pos.SetY(e2pos.Position.Y + (e2coll.Height));
         }
 
@@ -102,7 +102,7 @@ namespace HSP_ECS
 
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
-            e1pos.SetX(e2pos.Position.X - (e2coll.Width + 1));
+            e1pos.SetX(e2pos.Position.X - (e2coll.Width + 3));
         }
 
         private void RespondPoint_AABB(Collision pCol)
