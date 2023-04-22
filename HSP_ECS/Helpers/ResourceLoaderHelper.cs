@@ -52,6 +52,11 @@ namespace HSP_ECS
             this.LoadTexture("editor");
             this.LoadTexture("grid");
             this.LoadTexture("player_static");
+            this.LoadTexture("endflag_static");
+            this.LoadTexture("terrain_symbol");
+            this.LoadTexture("back");
+            this.LoadTexture("forward");
+            this.LoadTexture("screen");
         }
     }
 }

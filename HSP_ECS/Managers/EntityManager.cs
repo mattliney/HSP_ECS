@@ -38,6 +38,11 @@ namespace HSP_ECS
             mEntities.Add(pEntity);
         }
 
+        public void InsertEntity(Entity pEntity, int pIndex)
+        {
+            mEntities.Insert(pIndex,pEntity);
+        }
+
         public void RemoveEntity(Entity pEntity)
         {
             mEntities.Remove(pEntity);

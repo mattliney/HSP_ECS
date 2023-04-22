@@ -91,11 +91,11 @@ namespace HSP_ECS
         {
             SpriteBatch.Begin();
 
+            Render();
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
             mInputManager.ProcessInputs();
             mSystemManager.Action(mEntityManager.Entities, gameTime);
-
-            Render();
 
             SpriteBatch.End();
         }
