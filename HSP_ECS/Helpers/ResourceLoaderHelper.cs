@@ -50,6 +50,8 @@ namespace HSP_ECS
             this.LoadTexture("white_background");
             this.LoadTexture("levels");
             this.LoadTexture("editor");
+            this.LoadTexture("grid");
+            this.LoadTexture("player_static");
         }
     }
 }

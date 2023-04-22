@@ -70,7 +70,7 @@ namespace HSP_ECS
 
             CreateSystems();
 
-            CurrentScene = new GameScene(this, "Maps/Text/map2.txt");
+            CurrentScene = new TitleScene(this);
 
             Updater = CurrentScene.Update;
             Render = CurrentScene.Draw;
@@ -91,11 +91,11 @@ namespace HSP_ECS
         {
             SpriteBatch.Begin();
 
-            Render();
-
             GraphicsDevice.Clear(Color.CornflowerBlue);
             mInputManager.ProcessInputs();
             mSystemManager.Action(mEntityManager.Entities, gameTime);
+
+            Render();
 
             SpriteBatch.End();
         }
@@ -110,25 +110,22 @@ namespace HSP_ECS
             if (pScene == SceneType.TitleScene)
             {
                 CurrentScene = new TitleScene(this);
-                Updater = CurrentScene.Update;
-                Render = CurrentScene.Draw;
             }
             else if (pScene == SceneType.MenuScene)
             {
                 CurrentScene = new MenuScene(this);
-                Updater = CurrentScene.Update;
-                Render = CurrentScene.Draw;
             }
             else if (pScene == SceneType.EditorScene)
             {
-
+                CurrentScene = new EditorScene(this);
             }
             else if (pScene == SceneType.GameScene)
             {
                 CurrentScene = new GameScene(this, pFileName);
-                Updater = CurrentScene.Update;
-                Render = CurrentScene.Draw;
             }
+
+            Updater = CurrentScene.Update;
+            Render = CurrentScene.Draw;
         }
 
         public SpriteBatch SpriteBatch

@@ -30,11 +30,19 @@ namespace HSP_ECS
 
             Entity levels = new Entity("levels");
             levels.AddComponent(new ComponentSprite(mSceneManager.mResourceLoader.GetTexture("levels")));
-            levels.AddComponent(new ComponentPosition(new Vector2(448, 500)));
+            levels.AddComponent(new ComponentPosition(new Vector2(448, 100)));
             levels.AddComponent(new ComponentCollisionAABB(200, 150));
             levels.AddComponent(new ComponentButton());
             levels.AddComponent(new ComponentPhysics(new Vector2(0, 0), 0));
             mSceneManager.mEntityManager.AddEntity(levels);
+
+            Entity editor = new Entity("editor");
+            editor.AddComponent(new ComponentSprite(mSceneManager.mResourceLoader.GetTexture("editor")));
+            editor.AddComponent(new ComponentPosition(new Vector2(448, 500)));
+            editor.AddComponent(new ComponentCollisionAABB(200, 150));
+            editor.AddComponent(new ComponentButton());
+            editor.AddComponent(new ComponentPhysics(new Vector2(0, 0), 0));
+            mSceneManager.mEntityManager.AddEntity(editor);
 
             cursor = new Entity("cursor");
             cursorPoint = new ComponentCollisionPoint(new Vector2(0, 0));
@@ -70,11 +78,17 @@ namespace HSP_ECS
                 ComponentButton b = (ComponentButton)GetComponentHelper.GetComponent("ComponentButton", e);
 
                 // check if the button has been left or right clicked
-                if(b.LeftClick)
+                if(b.LeftClick && e.Name == "levels")
                 {
                     b.LeftClick = false;
                     b.RightClick = false;
                     mSceneManager.ChangeScene(SceneType.GameScene, "Maps/Text/map2.txt");
+                }
+                else if(b.LeftClick && e.Name == "editor")
+                {
+                    b.LeftClick = false;
+                    b.RightClick = false;
+                    mSceneManager.ChangeScene(SceneType.EditorScene, "");
                 }
 
                 b.LeftClick = false;

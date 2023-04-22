@@ -133,7 +133,7 @@ namespace HSP_ECS
             sr.Close();
 
             Entity en = new Entity("player");
-            en.AddComponent(new ComponentSprite(pResources.GetTexture("playerTemp")));
+            en.AddComponent(new ComponentSprite(pResources.GetTexture("player_static")));
             en.AddComponent(new ComponentPosition(new Vector2(0, 300)));
             en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 10f));
             en.AddComponent(new ComponentCollisionAABB(64, 64));

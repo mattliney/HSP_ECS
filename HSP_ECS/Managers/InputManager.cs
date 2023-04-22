@@ -22,6 +22,7 @@ namespace HSP_ECS
         {
             mSceneManager = pSceneManager;
             mSpeed = 400;
+            mNoPlayer = true;
         }
 
         public void GetPlayer(EntityManager pEntityManager)
