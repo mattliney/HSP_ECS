@@ -50,6 +50,11 @@ namespace HSP_ECS
             KeyboardState ks = Keyboard.GetState();
             if (mNoPlayer == false)
             {
+                if (ks.IsKeyDown(Keys.P))
+                {
+                    mSceneManager.ChangeScene(SceneType.TitleScene, "");
+                }
+
                 if (ks.IsKeyDown(Keys.W))
                 {
                     mPlayerPhys.SetVelY(-mSpeed);

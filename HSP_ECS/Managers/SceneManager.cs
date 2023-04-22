@@ -67,16 +67,13 @@ namespace HSP_ECS
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             mResourceLoader.LoadAllTextures();
+
+            CreateSystems();
+
             CurrentScene = new GameScene(this, "Maps/Text/map2.txt");
 
             Updater = CurrentScene.Update;
             Render = CurrentScene.Draw;
-
-            CreateSystems();
-
-            // temp
-            mSystemCollisionAABBAABB.GetPhysicsObjects(mEntityManager.Entities);
-            mSystemCollisionAABBPoint.GetPhysicsObjects(mEntityManager.Entities);
         }
 
         protected override void Update(GameTime gameTime)
@@ -101,6 +98,37 @@ namespace HSP_ECS
             mSystemManager.Action(mEntityManager.Entities, gameTime);
 
             SpriteBatch.End();
+        }
+
+        public void ChangeScene(SceneType pScene, string pFileName)
+        {
+            mEntityManager.ClearList();
+            mInputManager.ClearPlayer();
+            mSystemCollisionAABBPoint.ClearPhysicsObjects();
+            mSystemCollisionAABBAABB.ClearPhysicsObjects();
+
+            if (pScene == SceneType.TitleScene)
+            {
+                CurrentScene = new TitleScene(this);
+                Updater = CurrentScene.Update;
+                Render = CurrentScene.Draw;
+            }
+            else if (pScene == SceneType.MenuScene)
+            {
+                CurrentScene = new MenuScene(this);
+                Updater = CurrentScene.Update;
+                Render = CurrentScene.Draw;
+            }
+            else if (pScene == SceneType.EditorScene)
+            {
+
+            }
+            else if (pScene == SceneType.GameScene)
+            {
+                CurrentScene = new GameScene(this, pFileName);
+                Updater = CurrentScene.Update;
+                Render = CurrentScene.Draw;
+            }
         }
 
         public SpriteBatch SpriteBatch

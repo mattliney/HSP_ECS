@@ -45,6 +45,11 @@ namespace HSP_ECS
             this.LoadTexture("terrain_sand");
             this.LoadTexture("background_grass_far");
             this.LoadTexture("background_grass_near");
+            this.LoadTexture("title");
+            this.LoadTexture("start");
+            this.LoadTexture("white_background");
+            this.LoadTexture("levels");
+            this.LoadTexture("editor");
         }
     }
 }

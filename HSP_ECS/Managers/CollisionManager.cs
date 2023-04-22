@@ -1,6 +1,8 @@
 ﻿using HSP_ECS.Components;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,11 +29,14 @@ namespace HSP_ECS
     {
         private EntityManager mEntityManager;
         private List<Collision> mCollisionManifold;
+        private Stopwatch clickCooldown;
 
         public CollisionManager(EntityManager pEntityManager)
         {
             mEntityManager = pEntityManager;
             mCollisionManifold= new List<Collision>();
+            clickCooldown= new Stopwatch();
+            clickCooldown.Start();
         }
 
         public void ProcessCollisions()
@@ -109,7 +114,14 @@ namespace HSP_ECS
         {
             if(pCol.entity1.Name == "cursor")
             {
+                MouseState ms = Mouse.GetState();
 
+                if(ms.LeftButton == ButtonState.Pressed && clickCooldown.ElapsedMilliseconds > 100)
+                {
+                    clickCooldown.Restart();
+                    ComponentButton b = (ComponentButton)GetComponentHelper.GetComponent("ComponentButton",pCol.entity2);
+                    b.LeftClick = true;
+                }
             }
             else
             {

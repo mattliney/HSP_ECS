@@ -36,6 +36,9 @@ namespace HSP_ECS
             // get parallax variables
             GetParallax();
             mScreenWidth = mSceneManager.ScreenWidth;
+
+            mSceneManager.mSystemCollisionAABBAABB.GetPhysicsObjects(mSceneManager.mEntityManager.Entities);
+            mSceneManager.mSystemCollisionAABBPoint.GetPhysicsObjects(mSceneManager.mEntityManager.Entities);
         }
 
         public override void Draw()
@@ -89,6 +92,11 @@ namespace HSP_ECS
             {
                 pBackground1.SetX(pBackground2.Position.X - mScreenWidth);
             }
+        }
+
+        public override void ButtonAction(List<Entity> pButtons)
+        {
+
         }
     }
 }

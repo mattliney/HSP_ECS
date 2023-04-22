@@ -38,6 +38,12 @@ namespace HSP_ECS
             }
         }
 
+        public void ClearPhysicsObjects()
+        {
+            mPhysObjs.Clear();
+            mPhysObjs = new List<Entity>();
+        }
+
         public override void SystemAction(List<Entity> pEntities, GameTime pGameTime)
         {
             foreach(Entity physObj in mPhysObjs)
