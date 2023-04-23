@@ -60,6 +60,8 @@ namespace HSP_ECS
 
         protected override void Initialize()
         {
+            _graphics.SynchronizeWithVerticalRetrace = false;
+            this.IsFixedTimeStep = false;
             base.Initialize();
         }
 
@@ -78,6 +80,8 @@ namespace HSP_ECS
 
         protected override void Update(GameTime gameTime)
         {
+            this.Window.Title = (1 / gameTime.ElapsedGameTime.TotalSeconds).ToString();
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 

@@ -57,6 +57,8 @@ namespace HSP_ECS
             this.LoadTexture("back");
             this.LoadTexture("forward");
             this.LoadTexture("screen");
+            this.LoadTexture("save");
+            this.LoadTexture("enemy_static");
         }
     }
 }
