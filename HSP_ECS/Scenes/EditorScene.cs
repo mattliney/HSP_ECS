@@ -93,6 +93,10 @@ namespace HSP_ECS
                 {
                  
                 }
+                else if (e.Name.Contains("gridButton") && b.LeftClick)
+                {
+
+                }
                 else if(e.Name == "screen" && b.LeftClick)
                 {
                     foreach(Entity button in mControlButtons)
@@ -194,6 +198,20 @@ namespace HSP_ECS
             forward.AddComponent(new ComponentPhysics(new Vector2(0, 0), 0));
             mSceneManager.mEntityManager.AddEntity(forward);
             mControlButtons.Add(forward);
+
+            for(int x = 0; x < 17; x++)
+            {
+                for(int y = 0; y < 12; y++)
+                {
+                    Entity gridButton = new Entity("gridButton_" + x + "_" + y);
+                    gridButton.AddComponent(new ComponentPosition(new Vector2(x * 64, y * 64)));
+                    gridButton.AddComponent(new ComponentCollisionAABB(64, 64));
+                    gridButton.AddComponent(new ComponentButton());
+                    gridButton.AddComponent(new ComponentPhysics(new Vector2(0, 0), 0));
+                    mSceneManager.mEntityManager.AddEntity(gridButton);
+                    mSceneButtons.Add(gridButton);
+                }
+            }
         }
     }
 }
