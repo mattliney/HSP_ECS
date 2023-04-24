@@ -135,7 +135,7 @@ namespace HSP_ECS
             Entity en = new Entity("player");
             en.AddComponent(new ComponentSprite(pResources.GetTexture("player_static")));
             en.AddComponent(new ComponentPosition(new Vector2(0, 300)));
-            en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 10f));
+            en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 20f));
             en.AddComponent(new ComponentCollisionAABB(64, 64));
             en.AddComponent(new ComponentCollisionPoint(new Vector2(32, 66)));
             en.AddComponent(new ComponentCollisionPoint(new Vector2(49, 66)));

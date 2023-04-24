@@ -24,6 +24,10 @@ namespace HSP_ECS.Components
             {
                 return mSprite;
             }
+            set
+            {
+                mSprite= value;
+            }
         }
     }
 }

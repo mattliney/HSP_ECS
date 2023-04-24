@@ -51,10 +51,6 @@ namespace HSP_ECS
             KeyboardState ks = Keyboard.GetState();
             if (mNoPlayer == false)
             {
-                if (ks.IsKeyDown(Keys.P))
-                {
-                    mSceneManager.ChangeScene(SceneType.TitleScene, "");
-                }
 
                 if (ks.IsKeyDown(Keys.W))
                 {
@@ -92,6 +88,11 @@ namespace HSP_ECS
                     CameraHelper.cameraMovement = new Vector2(0, 0);
                     mPlayerPhys.SetVelX(0);
                 }
+            }
+
+            if (ks.IsKeyDown(Keys.P))
+            {
+                mSceneManager.ChangeScene(SceneType.TitleScene, "");
             }
         }
     }

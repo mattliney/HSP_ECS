@@ -85,7 +85,7 @@ namespace HSP_ECS
             ComponentPosition e2pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", pCol.entity2);
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
-            e1pos.SetX(e2pos.Position.X + (e2coll.Width + 3));
+            e1pos.SetX(e2pos.Position.X + (e2coll.Width + 2));
         }
 
         private void RespondAABB_AABB_Bottom(Collision pCol)
@@ -107,7 +107,7 @@ namespace HSP_ECS
 
             ComponentCollisionAABB e2coll = (ComponentCollisionAABB)GetComponentHelper.GetComponent("ComponentCollisionAABB", pCol.entity2);
 
-            e1pos.SetX(e2pos.Position.X - (e2coll.Width + 3));
+            e1pos.SetX(e2pos.Position.X - (e2coll.Width + 2));
         }
 
         private void RespondPoint_AABB(Collision pCol)
@@ -121,6 +121,12 @@ namespace HSP_ECS
                     clickCooldown.Restart();
                     ComponentButton b = (ComponentButton)GetComponentHelper.GetComponent("ComponentButton",pCol.entity2);
                     b.LeftClick = true;
+                }
+                else if(ms.RightButton == ButtonState.Pressed && clickCooldown.ElapsedMilliseconds > 100)
+                {
+                    clickCooldown.Restart();
+                    ComponentButton b = (ComponentButton)GetComponentHelper.GetComponent("ComponentButton", pCol.entity2);
+                    b.RightClick = true;
                 }
             }
             else

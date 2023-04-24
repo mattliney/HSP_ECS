@@ -16,18 +16,29 @@ namespace HSP_ECS
 {
     public class EditorScene : Scene
     {
+        // Cursor variables
         Entity cursor;
         ComponentCollisionPoint cursorPoint;
         ComponentPosition cursorPos;
 
+        // Lists and Array
         List<Entity> mControlButtons;
-        bool mUp;
+        List<Entity> mGridButtons;
+        List<Entity> mArrayEntities;
+        char[,] mArray;
 
-        Texture2D grid;
+        char mCurrentBlock;
+        int mCurrentScreen;
+        bool mUp;
 
         public EditorScene(SceneManager pSceneManager) : base(pSceneManager)
         {
+            mCurrentScreen= 0;
+            mCurrentBlock = 'T';
             mControlButtons = new List<Entity>();
+            mGridButtons = new List<Entity>();
+            mArrayEntities = new List<Entity>();
+            mArray = new char[68, 12];
             mUp= false;
 
             cursor = new Entity("cursor");
@@ -38,16 +49,19 @@ namespace HSP_ECS
             cursor.AddComponent(cursorPos);
             mSceneManager.mEntityManager.AddEntity(cursor);
 
+            Entity grid = new Entity("grid");
+            grid.AddComponent(new ComponentPosition(new Vector2(0,0)));
+            grid.AddComponent(new ComponentSprite(mSceneManager.mResourceLoader.GetTexture("grid")));
+            mSceneManager.mEntityManager.AddEntity(grid);
+
             MakeButtons();
             GetButtons();
             mSceneManager.mSystemCollisionAABBPoint.GetPhysicsObjects(mSceneManager.mEntityManager.Entities);
-
-            grid = mSceneManager.mResourceLoader.GetTexture("grid");
         }
 
         public override void Draw()
         {
-            mSceneManager.SpriteBatch.Draw(grid, Vector2.Zero, Color.White);
+
         }
 
         public override void Update(GameTime pGameTime)
@@ -67,11 +81,11 @@ namespace HSP_ECS
 
                 if(e.Name == "plyr" && b.LeftClick)
                 {
-                   
+
                 }
                 else if (e.Name == "terrain" && b.LeftClick)
                 {
-                  
+
                 }
                 else if (e.Name == "end" && b.LeftClick)
                 {
@@ -87,14 +101,60 @@ namespace HSP_ECS
                 }
                 else if (e.Name == "back" && b.LeftClick)
                 {
-                   
+                   if(mCurrentScreen > 0)
+                    {
+                        mCurrentScreen--;
+
+                        foreach(Entity ae in mArrayEntities)
+                        {
+                            ComponentPosition pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", ae);
+                            pos.SetX(pos.Position.X + 1088);
+                        }
+
+                    }
                 }
                 else if (e.Name == "forward" && b.LeftClick)
                 {
-                 
+                    if (mCurrentScreen < 3)
+                    {
+                        mCurrentScreen++;
+
+                        foreach (Entity ae in mArrayEntities)
+                        {
+                            ComponentPosition pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", ae);
+                            pos.SetX(pos.Position.X - 1088);
+                        }
+                    }
                 }
-                else if (e.Name.Contains("gridButton") && b.LeftClick)
+                else if ((e.Name.Contains("gridButton") && b.LeftClick) || (e.Name.Contains("gridButton") && b.RightClick))
                 {
+                    ComponentPosition pos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", e);
+                    Vector2 position = pos.Position;
+
+                    float x = (position.X / 64);
+                    float y = (position.Y / 64);
+
+                    foreach (Entity arrayEntity in mArrayEntities)
+                    {
+                        ComponentPosition aePos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", arrayEntity);
+                        Vector2 aePosition = aePos.Position;
+
+                        float aeX = (aePosition.X / 64);
+                        float aeY = (aePosition.Y / 64);
+
+                        if (x == aeX && y == aeY)
+                        {
+                            ComponentSprite sprite = (ComponentSprite)GetComponentHelper.GetComponent("ComponentSprite", arrayEntity);
+                            if(b.LeftClick)
+                            {
+                                sprite.Sprite = mSceneManager.mResourceLoader.GetTexture("terrain_grass");
+                            }
+                            else if(b.RightClick)
+                            {
+                                sprite.Sprite = mSceneManager.mResourceLoader.GetTexture("blank");
+                            }
+                        }
+                    }
 
                 }
                 else if(e.Name == "screen" && b.LeftClick)
@@ -210,6 +270,20 @@ namespace HSP_ECS
                     gridButton.AddComponent(new ComponentPhysics(new Vector2(0, 0), 0));
                     mSceneManager.mEntityManager.AddEntity(gridButton);
                     mSceneButtons.Add(gridButton);
+                    mGridButtons.Add(gridButton);
+                }
+            }
+
+            for(int x = 0; x < 68; x++)
+            {
+                for(int y = 0; y < 12; y++)
+                {
+                    Entity arrayEntity = new Entity(x + " " + y);
+                    arrayEntity.AddComponent(new ComponentPosition(new Vector2(x * 64, y * 64)));
+                    arrayEntity.AddComponent(new ComponentSprite(mSceneManager.mResourceLoader.GetTexture("blank")));
+                    mArrayEntities.Add(arrayEntity);
+                    mSceneManager.mEntityManager.InsertEntity(arrayEntity, 0);
+                    mArray[x, y] = 'O';
                 }
             }
         }
