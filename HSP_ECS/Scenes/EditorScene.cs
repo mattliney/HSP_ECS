@@ -11,6 +11,8 @@ using System.Net.Http.Headers;
 using HSP_ECS.Helpers;
 using HSP_ECS.Systems;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
+using System.Xml;
 
 namespace HSP_ECS
 {
@@ -28,13 +30,19 @@ namespace HSP_ECS
         char[,] mArray;
 
         char mCurrentBlock;
+        Texture2D mCurrentBlockTexture;
         int mCurrentScreen;
         bool mUp;
+        bool mPlayer;
+        bool mEnd;
 
         public EditorScene(SceneManager pSceneManager) : base(pSceneManager)
         {
+            mPlayer = false;
+            mEnd= false;
             mCurrentScreen= 0;
             mCurrentBlock = 'T';
+            mCurrentBlockTexture = mSceneManager.mResourceLoader.GetTexture("terrain_grass");
             mControlButtons = new List<Entity>();
             mGridButtons = new List<Entity>();
             mArrayEntities = new List<Entity>();
@@ -81,23 +89,27 @@ namespace HSP_ECS
 
                 if(e.Name == "plyr" && b.LeftClick)
                 {
-
+                    mCurrentBlock = 'P';
+                    mCurrentBlockTexture = mSceneManager.mResourceLoader.GetTexture("player_static");
                 }
                 else if (e.Name == "terrain" && b.LeftClick)
                 {
-
+                    mCurrentBlock = 'T';
+                    mCurrentBlockTexture = mSceneManager.mResourceLoader.GetTexture("terrain_grass");
                 }
                 else if (e.Name == "end" && b.LeftClick)
                 {
-              
+                    mCurrentBlock = 'F';
+                    mCurrentBlockTexture = mSceneManager.mResourceLoader.GetTexture("endflag_static");
                 }
                 else if (e.Name == "enemy" && b.LeftClick)
                 {
-                
+                    mCurrentBlock = 'E';
+                    mCurrentBlockTexture = mSceneManager.mResourceLoader.GetTexture("enemy_static");
                 }
                 else if (e.Name == "save" && b.LeftClick)
                 {
-               
+                    SaveLevel();
                 }
                 else if (e.Name == "back" && b.LeftClick)
                 {
@@ -144,14 +156,18 @@ namespace HSP_ECS
 
                         if (x == aeX && y == aeY)
                         {
+                            int xOffset = (int)x + (mCurrentScreen * 17);
+
                             ComponentSprite sprite = (ComponentSprite)GetComponentHelper.GetComponent("ComponentSprite", arrayEntity);
                             if(b.LeftClick)
                             {
-                                sprite.Sprite = mSceneManager.mResourceLoader.GetTexture("terrain_grass");
+                                sprite.Sprite = mCurrentBlockTexture;
+                                mArray[xOffset ,(int)y] = mCurrentBlock;
                             }
                             else if(b.RightClick)
                             {
                                 sprite.Sprite = mSceneManager.mResourceLoader.GetTexture("blank");
+                                mArray[xOffset, (int)y] = 'O';
                             }
                         }
                     }
@@ -286,6 +302,43 @@ namespace HSP_ECS
                     mArray[x, y] = 'O';
                 }
             }
+        }
+
+        private void SaveLevel()
+        {
+            XmlWriter xmlWriter = XmlWriter.Create("Maps/XML/test.xml");
+
+            xmlWriter.WriteStartElement("map");
+
+            xmlWriter.WriteStartElement("user");
+            xmlWriter.WriteString("John Doe");
+            xmlWriter.WriteEndElement();
+
+            Random rand = new Random();
+            string name = "";
+            for(int i = 0; i < 10; i++)
+            {
+                string rng = rand.Next(0, 255).ToString();
+                name += rng;
+            }
+            StreamWriter sw = new StreamWriter("Maps/Text/" + name + ".txt");
+
+            for (int y = 0; y < 12; y++)
+            {
+                for(int x = 0; x < 68; x++)
+                {
+                    sw.Write(mArray[x, y]);
+                }
+                sw.Write("\r\n");
+            }
+
+            sw.Close();
+
+            xmlWriter.WriteEndDocument();
+
+            xmlWriter.Close();
+
+            mSceneManager.ChangeScene(SceneType.TitleScene, "");
         }
     }
 }

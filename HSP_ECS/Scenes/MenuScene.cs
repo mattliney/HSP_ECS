@@ -82,7 +82,7 @@ namespace HSP_ECS
                 {
                     b.LeftClick = false;
                     b.RightClick = false;
-                    mSceneManager.ChangeScene(SceneType.GameScene, "Maps/Text/map2.txt");
+                    mSceneManager.ChangeScene(SceneType.GameScene, "Maps/Text/map3.txt");
                 }
                 else if(b.LeftClick && e.Name == "editor")
                 {
