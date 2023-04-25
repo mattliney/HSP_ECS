@@ -306,37 +306,37 @@ namespace HSP_ECS
 
         private void SaveLevel()
         {
-            XmlWriter xmlWriter = XmlWriter.Create("Maps/XML/test.xml");
-
-            xmlWriter.WriteStartElement("map");
-
-            xmlWriter.WriteStartElement("user");
-            xmlWriter.WriteString("John Doe");
-            xmlWriter.WriteEndElement();
-
             Random rand = new Random();
             string name = "";
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 string rng = rand.Next(0, 255).ToString();
                 name += rng;
             }
-            StreamWriter sw = new StreamWriter("Maps/Text/" + name + ".txt");
+
+            XmlWriter xmlW = XmlWriter.Create("Maps/XML/" + name + ".xml");
+            xmlW.WriteStartElement("map");
 
             for (int y = 0; y < 12; y++)
             {
-                for(int x = 0; x < 68; x++)
+                xmlW.WriteStartElement("layer" + y);
+                string layer = "";
+
+                for (int x = 0; x < 68; x++)
                 {
-                    sw.Write(mArray[x, y]);
+                    layer += mArray[x, y];
                 }
-                sw.Write("\r\n");
+
+                xmlW.WriteString(layer);
+                xmlW.WriteEndElement();
             }
 
-            sw.Close();
+            xmlW.WriteStartElement("theme");
+            xmlW.WriteStartElement("grass");
+            xmlW.WriteEndElement();
 
-            xmlWriter.WriteEndDocument();
-
-            xmlWriter.Close();
+            xmlW.WriteEndDocument();
+            xmlW.Close();
 
             mSceneManager.ChangeScene(SceneType.TitleScene, "");
         }

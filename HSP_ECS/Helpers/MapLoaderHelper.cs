@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using HSP_ECS.Components;
 using Microsoft.Xna.Framework;
+using System.Xml;
+using System.Globalization;
 
 namespace HSP_ECS
 {
@@ -142,6 +144,49 @@ namespace HSP_ECS
             en.AddComponent(new ComponentCollisionPoint(new Vector2(10, 66)));
 
             pEM.AddEntity(en);
+        }
+
+        public static void LoadMapXML(string pFileName, EntityManager pEM, ResourceLoaderHelper pResources)
+        {
+            XmlReader xmlR = XmlReader.Create(pFileName);
+            int index = 0;
+            string[] layers = new string[12];
+            int xOffset = 0;
+            int yOffset = 0;
+            int terrainIndex = 0;
+
+            while (xmlR.Read())
+            {
+                XmlNodeType type =  xmlR.MoveToContent();
+                if(type == XmlNodeType.Text)
+                {
+                    string layer = xmlR.Value;
+                    layers[index] = layer;
+                    index++;
+                }
+            }
+
+            ComponentSprite sp;
+            ComponentPosition pos;
+            Entity e;
+
+            for (int i = 0; i < 12; i++)
+            {
+                foreach(char c in layers[i])
+                {
+                    if(c == 'T')
+                    {
+                        sp = new ComponentSprite(pResources.GetTexture("terrain_grass"));
+                        e = new Entity("terrain" + terrainIndex);
+                        pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
+                        e.AddComponent(sp); e.AddComponent(pos);
+                        e.AddComponent(new ComponentCollisionAABB(64, 64));
+                        pEM.AddEntity(e);
+                    }
+                    xOffset++;
+                }
+                yOffset++;
+            }
         }
 
         private static bool ValidCoordChecker(int pX, int pY, int pArrayWidth, int pArrayHeight)

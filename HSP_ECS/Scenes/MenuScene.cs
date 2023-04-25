@@ -23,6 +23,8 @@ namespace HSP_ECS
 
         public MenuScene(SceneManager pSceneManager) : base(pSceneManager)
         {
+            MapLoaderHelper.LoadMapXML("Maps/XML/testmap.xml", null, null);
+
             Entity back = new Entity("background");
             back.AddComponent(new ComponentSprite(mSceneManager.mResourceLoader.GetTexture("white_background")));
             back.AddComponent(new ComponentPosition(new Vector2(0, 0)));
@@ -82,7 +84,7 @@ namespace HSP_ECS
                 {
                     b.LeftClick = false;
                     b.RightClick = false;
-                    mSceneManager.ChangeScene(SceneType.GameScene, "Maps/Text/map3.txt");
+                    mSceneManager.ChangeScene(SceneType.GameScene, "Maps/Text/map2.txt");
                 }
                 else if(b.LeftClick && e.Name == "editor")
                 {
