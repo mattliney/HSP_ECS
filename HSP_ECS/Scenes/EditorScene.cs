@@ -161,13 +161,13 @@ namespace HSP_ECS
                             ComponentSprite sprite = (ComponentSprite)GetComponentHelper.GetComponent("ComponentSprite", arrayEntity);
                             if(b.LeftClick)
                             {
-                                if(mPlayer && mCurrentBlock == 'P')
+                                if((mPlayer && mCurrentBlock == 'P') || (mCurrentScreen == 1 && mCurrentBlock == 'P'))
                                 {
-
+                                    // do nothing
                                 }
                                 else if(mEnd && mCurrentBlock == 'F')
                                 {
-
+                                    // do nothing
                                 }
                                 else
                                 {

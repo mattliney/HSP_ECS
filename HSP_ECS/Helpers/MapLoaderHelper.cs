@@ -210,6 +210,7 @@ namespace HSP_ECS
             ComponentSprite sp;
             ComponentPosition pos;
             Entity e;
+            Vector2 playerSpawn = new Vector2(0,300);
 
             for (int i = 0; i < 12; i++)
             {
@@ -224,6 +225,28 @@ namespace HSP_ECS
                         e.AddComponent(new ComponentCollisionAABB(64, 64));
                         pEM.AddEntity(e);
                     }
+                    else if(c == 'P')
+                    {
+                        playerSpawn = new Vector2(xOffset * 64, yOffset * 64);
+                    }
+                    else if(c == 'E')
+                    {
+                        e = new Entity("terrain" + terrainIndex);
+                        e.AddComponent(new ComponentSpriteSheet(pResources.GetTexture("enemy_sheet"), 64, 64, 3, 200));
+                        pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
+                        e.AddComponent(pos);
+                        e.AddComponent(new ComponentCollisionAABB(64, 64));
+                        pEM.AddEntity(e);
+                    }
+                    else if (c == 'F')
+                    {
+                        sp = new ComponentSprite(pResources.GetTexture("endflag_static"));
+                        e = new Entity("terrain" + terrainIndex);
+                        pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
+                        e.AddComponent(sp); e.AddComponent(pos);
+                        e.AddComponent(new ComponentCollisionAABB(64, 64));
+                        pEM.AddEntity(e);
+                    }
                     xOffset++;
                 }
                 yOffset++;
@@ -231,8 +254,8 @@ namespace HSP_ECS
             }
 
             Entity en = new Entity("player");
-            en.AddComponent(new ComponentSprite(pResources.GetTexture("player_static")));
-            en.AddComponent(new ComponentPosition(new Vector2(0, 300)));
+            en.AddComponent(new ComponentSpriteSheet(pResources.GetTexture("player_sheet"), 64, 64, 3, 200));
+            en.AddComponent(new ComponentPosition(playerSpawn));
             en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 20f));
             en.AddComponent(new ComponentCollisionAABB(64, 64));
             en.AddComponent(new ComponentCollisionPoint(new Vector2(32, 66)));

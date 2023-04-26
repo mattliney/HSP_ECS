@@ -13,10 +13,12 @@ namespace HSP_ECS.Systems
     {
         private string mPosComponent = "ComponentPosition";
         private string mSpriteComponent = "ComponentSprite";
+        private string mSheetComponent = "ComponentSpriteSheet";
         private SpriteBatch sb;
 
         private ComponentPosition pos;
         private ComponentSprite sprite;
+        private ComponentSpriteSheet sheet;
 
         public SystemRender(SpriteBatch pSpriteBatch)
         {
@@ -32,10 +34,17 @@ namespace HSP_ECS.Systems
                 if(pos != null)
                 {
                     sprite = (ComponentSprite)GetComponentHelper.GetComponent(mSpriteComponent, e);
+                    sheet = (ComponentSpriteSheet)GetComponentHelper.GetComponent(mSheetComponent, e);
                     if(sprite != null)
                     {
                         sb.Draw(sprite.Sprite, pos.Position, Color.White);
                     }
+                    else if(sheet != null)
+                    {
+                        sheet.ChangeFrame();
+                        sb.Draw(sheet.Sprite, pos.Position, sheet.Source, Color.White);
+                    }
+
                 }
             }
         }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace HSP_ECS.Components
         private Texture2D mSprite;
         private Rectangle mSource;
 
+        private Stopwatch mTimer;
+
         private int mFrameWidth;
         private int mFrameHeight;
         private int mFrameCount;
@@ -23,6 +26,8 @@ namespace HSP_ECS.Components
         public ComponentSpriteSheet(Texture2D pSprite, int pFrameWidth, int pFrameHeight, int pFrameCount, float pFrameRate)
         {
             mName = "ComponentSpriteSheet";
+            mTimer = new Stopwatch();
+            mTimer.Start();
 
             mSprite = pSprite;
             mFrameCount= pFrameCount;
@@ -61,6 +66,15 @@ namespace HSP_ECS.Components
             get
             {
                 return mSource;
+            }
+        }
+
+        public void ChangeFrame()
+        {
+            if(mTimer.ElapsedMilliseconds >= mFrameRate)
+            {
+                mTimer.Restart();
+                UpdateSource();
             }
         }
     }
