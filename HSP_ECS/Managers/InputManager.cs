@@ -15,6 +15,7 @@ namespace HSP_ECS
         private Entity mPlayer;
         private ComponentPhysics mPlayerPhys;
         private ComponentPosition mPlayerPos;
+        private ComponentPlayer mPlayerComp;
         private int mSpeed;
         private bool mNoPlayer;
 
@@ -34,6 +35,7 @@ namespace HSP_ECS
                     mPlayer = e;
                     mPlayerPhys = (ComponentPhysics)GetComponentHelper.GetComponent("ComponentPhysics", e);
                     mPlayerPos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", e);
+                    mPlayerComp = (ComponentPlayer)GetComponentHelper.GetComponent("ComponentPlayer", e);
                     mNoPlayer = false;
                     return;
                 }
@@ -54,7 +56,11 @@ namespace HSP_ECS
 
                 if (ks.IsKeyDown(Keys.W))
                 {
-                    mPlayerPhys.SetVelY(-mSpeed);
+                    if(mPlayerComp.HasJumped == false)
+                    {
+                        mPlayerPhys.SetVelY(-mSpeed);
+                        mPlayerComp.HasJumped = true;
+                    }
                 }
 
                 if (ks.IsKeyDown(Keys.A))

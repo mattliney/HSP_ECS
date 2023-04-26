@@ -132,6 +132,12 @@ namespace HSP_ECS
             else
             {
                 ComponentPhysics phys = (ComponentPhysics)GetComponentHelper.GetComponent("ComponentPhysics", pCol.entity1);
+                ComponentPlayer e1player = (ComponentPlayer)GetComponentHelper.GetComponent("ComponentPlayer", pCol.entity1);
+                if (e1player != null)
+                {
+                    e1player.HasJumped = false;
+                }
+
                 phys.StopAccel();
             }
         }

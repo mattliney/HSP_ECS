@@ -372,7 +372,7 @@ namespace HSP_ECS
             }
 
             xmlW.WriteStartElement("theme");
-            xmlW.WriteStartElement("grass");
+            xmlW.WriteString("grass");
             xmlW.WriteEndElement();
 
             xmlW.WriteEndDocument();

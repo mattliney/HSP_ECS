@@ -154,55 +154,73 @@ namespace HSP_ECS
             int xOffset = 0;
             int yOffset = 0;
             int terrainIndex = 0;
+            string theme = "grass";
 
             while (xmlR.Read())
             {
                 XmlNodeType type =  xmlR.MoveToContent();
                 if(type == XmlNodeType.Text)
                 {
-                    string layer = xmlR.Value;
-                    layers[index] = layer;
-                    index++;
+                    string value = xmlR.Value;
+
+                    if(value == "grass" || value == "sand")
+                    {
+                        theme = value;
+                    }
+                    else
+                    {
+                        layers[index] = value;
+                        index++;
+                    }
                 }
             }
 
-            ComponentSprite background;
+            ComponentSprite backgroundNear;
+            ComponentSprite backgroundFar;
+            ComponentSprite terrain;
             ComponentPosition position;
             ComponentParallax parallax;
             Entity backSprite;
 
-            background = new ComponentSprite(pResources.GetTexture("background_grass_far"));
+            backgroundFar = new ComponentSprite(pResources.GetTexture("background_grass_far"));
+            backgroundNear = new ComponentSprite(pResources.GetTexture("background_grass_near"));
+            terrain = new ComponentSprite(pResources.GetTexture("terrain_grass"));
+
+            if (theme == "sand")
+            {
+                backgroundFar = new ComponentSprite(pResources.GetTexture("background_sand_far"));
+                backgroundNear = new ComponentSprite(pResources.GetTexture("background_sand_near"));
+                terrain = new ComponentSprite(pResources.GetTexture("terrain_sand"));
+            }
+
             position = new ComponentPosition(new Vector2(0, 100));
             parallax = new ComponentParallax(0.5f);
             backSprite = new Entity("parallaxFar1");
-            backSprite.AddComponent(background);
+            backSprite.AddComponent(backgroundFar);
             backSprite.AddComponent(position);
             backSprite.AddComponent(parallax);
             pEM.AddEntity(backSprite);
 
-            background = new ComponentSprite(pResources.GetTexture("background_grass_far"));
             position = new ComponentPosition(new Vector2(1088, 100));
             parallax = new ComponentParallax(0.5f);
             backSprite = new Entity("parallaxFar2");
-            backSprite.AddComponent(background);
+            backSprite.AddComponent(backgroundFar);
             backSprite.AddComponent(position);
             backSprite.AddComponent(parallax);
             pEM.AddEntity(backSprite);
 
-            background = new ComponentSprite(pResources.GetTexture("background_grass_near"));
             position = new ComponentPosition(new Vector2(0, 100));
             parallax = new ComponentParallax(0.7f);
             backSprite = new Entity("parallaxNear1");
-            backSprite.AddComponent(background);
+            backSprite.AddComponent(backgroundNear);
             backSprite.AddComponent(position);
             backSprite.AddComponent(parallax);
             pEM.AddEntity(backSprite);
 
-            background = new ComponentSprite(pResources.GetTexture("background_grass_near"));
             position = new ComponentPosition(new Vector2(1088, 100));
             parallax = new ComponentParallax(0.7f);
             backSprite = new Entity("parallaxNear2");
-            backSprite.AddComponent(background);
+            backSprite.AddComponent(backgroundNear);
             backSprite.AddComponent(position);
             backSprite.AddComponent(parallax);
             pEM.AddEntity(backSprite);
@@ -218,10 +236,9 @@ namespace HSP_ECS
                 {
                     if(c == 'T')
                     {
-                        sp = new ComponentSprite(pResources.GetTexture("terrain_grass"));
                         e = new Entity("terrain" + terrainIndex);
                         pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
-                        e.AddComponent(sp); e.AddComponent(pos);
+                        e.AddComponent(terrain); e.AddComponent(pos);
                         e.AddComponent(new ComponentCollisionAABB(64, 64));
                         pEM.AddEntity(e);
                     }
@@ -256,6 +273,7 @@ namespace HSP_ECS
             Entity en = new Entity("player");
             en.AddComponent(new ComponentSpriteSheet(pResources.GetTexture("player_sheet"), 64, 64, 3, 200));
             en.AddComponent(new ComponentPosition(playerSpawn));
+            en.AddComponent(new ComponentPlayer(3));
             en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 20f));
             en.AddComponent(new ComponentCollisionAABB(64, 64));
             en.AddComponent(new ComponentCollisionPoint(new Vector2(32, 66)));
