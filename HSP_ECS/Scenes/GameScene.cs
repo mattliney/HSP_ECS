@@ -53,7 +53,7 @@ namespace HSP_ECS
         {
             for(int i = 0; i < mPlayerComp.Health; i++)
             {
-                mSceneManager.SpriteBatch.Draw(heart, new Vector2((i + 1) * 80, 50), Color.White);
+                mSceneManager.SpriteBatch.Draw(heart, new Vector2((i + 1) * 70, 50), Color.White);
             }
         }
 
