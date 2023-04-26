@@ -166,6 +166,47 @@ namespace HSP_ECS
                 }
             }
 
+            ComponentSprite background;
+            ComponentPosition position;
+            ComponentParallax parallax;
+            Entity backSprite;
+
+            background = new ComponentSprite(pResources.GetTexture("background_grass_far"));
+            position = new ComponentPosition(new Vector2(0, 100));
+            parallax = new ComponentParallax(0.5f);
+            backSprite = new Entity("parallaxFar1");
+            backSprite.AddComponent(background);
+            backSprite.AddComponent(position);
+            backSprite.AddComponent(parallax);
+            pEM.AddEntity(backSprite);
+
+            background = new ComponentSprite(pResources.GetTexture("background_grass_far"));
+            position = new ComponentPosition(new Vector2(1088, 100));
+            parallax = new ComponentParallax(0.5f);
+            backSprite = new Entity("parallaxFar2");
+            backSprite.AddComponent(background);
+            backSprite.AddComponent(position);
+            backSprite.AddComponent(parallax);
+            pEM.AddEntity(backSprite);
+
+            background = new ComponentSprite(pResources.GetTexture("background_grass_near"));
+            position = new ComponentPosition(new Vector2(0, 100));
+            parallax = new ComponentParallax(0.7f);
+            backSprite = new Entity("parallaxNear1");
+            backSprite.AddComponent(background);
+            backSprite.AddComponent(position);
+            backSprite.AddComponent(parallax);
+            pEM.AddEntity(backSprite);
+
+            background = new ComponentSprite(pResources.GetTexture("background_grass_near"));
+            position = new ComponentPosition(new Vector2(1088, 100));
+            parallax = new ComponentParallax(0.7f);
+            backSprite = new Entity("parallaxNear2");
+            backSprite.AddComponent(background);
+            backSprite.AddComponent(position);
+            backSprite.AddComponent(parallax);
+            pEM.AddEntity(backSprite);
+
             ComponentSprite sp;
             ComponentPosition pos;
             Entity e;
@@ -186,7 +227,19 @@ namespace HSP_ECS
                     xOffset++;
                 }
                 yOffset++;
+                xOffset= 0;
             }
+
+            Entity en = new Entity("player");
+            en.AddComponent(new ComponentSprite(pResources.GetTexture("player_static")));
+            en.AddComponent(new ComponentPosition(new Vector2(0, 300)));
+            en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 20f));
+            en.AddComponent(new ComponentCollisionAABB(64, 64));
+            en.AddComponent(new ComponentCollisionPoint(new Vector2(32, 66)));
+            en.AddComponent(new ComponentCollisionPoint(new Vector2(49, 66)));
+            en.AddComponent(new ComponentCollisionPoint(new Vector2(10, 66)));
+
+            pEM.AddEntity(en);
         }
 
         private static bool ValidCoordChecker(int pX, int pY, int pArrayWidth, int pArrayHeight)

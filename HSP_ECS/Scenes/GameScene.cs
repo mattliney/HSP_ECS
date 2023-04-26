@@ -27,7 +27,7 @@ namespace HSP_ECS
         public GameScene(SceneManager pSceneManager, string pLevelName) : base(pSceneManager)
         {
             // game scene will need to get the file name for the map and then load it.
-            MapLoaderHelper.LoadTextMap(pLevelName, mSceneManager.mEntityManager, mSceneManager.mResourceLoader);
+            MapLoaderHelper.LoadMapXML(pLevelName, mSceneManager.mEntityManager, mSceneManager.mResourceLoader);
 
             // input manager needs to find the player in the list in order to move him.
             mSceneManager.mInputManager.GetPlayer(mSceneManager.mEntityManager);

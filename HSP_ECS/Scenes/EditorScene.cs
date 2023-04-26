@@ -161,11 +161,51 @@ namespace HSP_ECS
                             ComponentSprite sprite = (ComponentSprite)GetComponentHelper.GetComponent("ComponentSprite", arrayEntity);
                             if(b.LeftClick)
                             {
-                                sprite.Sprite = mCurrentBlockTexture;
-                                mArray[xOffset ,(int)y] = mCurrentBlock;
+                                if(mPlayer && mCurrentBlock == 'P')
+                                {
+
+                                }
+                                else if(mEnd && mCurrentBlock == 'F')
+                                {
+
+                                }
+                                else
+                                {
+                                    if(sprite.Sprite.Name == "player_static")
+                                    {
+                                        mPlayer= false;
+                                    }
+                                    else if(sprite.Sprite.Name == "endflag_static")
+                                    {
+                                        mEnd = false;
+                                    }
+
+                                    sprite.Sprite = mCurrentBlockTexture;
+                                    mArray[xOffset, (int)y] = mCurrentBlock;
+
+                                    if (mPlayer == false && mCurrentBlock == 'P')
+                                    {
+                                        mPlayer = true;
+                                    }
+
+                                    if (mEnd == false && mCurrentBlock == 'F')
+                                    {
+                                        mEnd = true;
+                                    }
+                                }
+
                             }
                             else if(b.RightClick)
                             {
+                                if (sprite.Sprite.Name == "player_static")
+                                {
+                                    mPlayer = false;
+                                }
+                                else if (sprite.Sprite.Name == "endflag_static")
+                                {
+                                    mEnd = false;
+                                }
+
                                 sprite.Sprite = mSceneManager.mResourceLoader.GetTexture("blank");
                                 mArray[xOffset, (int)y] = 'O';
                             }
