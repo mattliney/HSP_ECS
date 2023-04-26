@@ -28,6 +28,7 @@ namespace HSP_ECS
         public LevelSelectScene(SceneManager pSceneManager) : base(pSceneManager)
         {
             mFiles = Directory.GetFiles("Maps/XML");
+            
             levelButtons= new List<Entity>();
 
             Entity back = new Entity("background");

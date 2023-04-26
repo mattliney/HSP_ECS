@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,8 @@ namespace HSP_ECS
 
         public override void SystemAction(List<Entity> pEntities, GameTime pGameTime)
         {
+            int numberOfCollisionChecks = 0;
+
             foreach(Entity physObj in mPhysObjs)
             {
                 foreach (Entity e in pEntities)
@@ -60,10 +63,13 @@ namespace HSP_ECS
                         if (mCollision != null)
                         {
                             Collide(physObj, e);
+                            numberOfCollisionChecks++;
                         }
                     }
                 }
             }
+
+            Debug.WriteLine("There were " + numberOfCollisionChecks + " collision checks this frame.");
         }
 
         private void Collide(Entity pEntity1, Entity pEntity2)
