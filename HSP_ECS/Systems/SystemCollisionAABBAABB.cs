@@ -104,6 +104,23 @@ namespace HSP_ECS
                 float yExtentRect2 = rect2height / 2;
                 float yOverlap = (yExtentRect1 - yExtentRect2) - Math.Abs(distance.Y);
 
+                if(pEntity1.Name == "player" && pEntity2.Name.Contains("enemy"))
+                {
+                    Collision col = new Collision();
+                    col.entity1 = pEntity1;
+                    col.entity2 = pEntity2;
+                    col.type = CollisionType.PLAYER_ENEMY;
+                    mCollisionManager.RegisterCollision(col);
+                }
+                else if (pEntity1.Name == "player" && pEntity2.Name.Contains("end"))
+                {
+                    Collision col = new Collision();
+                    col.entity1 = pEntity1;
+                    col.entity2 = pEntity2;
+                    col.type = CollisionType.PLAYER_END;
+                    mCollisionManager.RegisterCollision(col);
+                }
+
                 if (yOverlap > xOverlap)
                 {
                     if (distance.X > 0)

@@ -64,6 +64,8 @@ namespace HSP_ECS
             this.LoadTexture("enemy_sheet");
             this.LoadTexture("background_sand_far");
             this.LoadTexture("background_sand_near");
+            this.LoadTexture("button");
+            this.LoadTexture("heart");
         }
     }
 }

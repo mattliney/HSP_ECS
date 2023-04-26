@@ -13,7 +13,8 @@ namespace HSP_ECS
         TitleScene,
         GameScene,
         MenuScene,
-        EditorScene
+        EditorScene,
+        SelectScene
     }
 
     public abstract class Scene

@@ -58,7 +58,7 @@ namespace HSP_ECS
                 {
                     if(mPlayerComp.HasJumped == false)
                     {
-                        mPlayerPhys.SetVelY(-mSpeed);
+                        mPlayerPhys.SetVelY(-500);
                         mPlayerComp.HasJumped = true;
                     }
                 }

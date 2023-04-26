@@ -26,7 +26,7 @@ namespace HSP_ECS.Components
             }
             set
             {
-                mSprite= value;
+                mSprite = value;
             }
         }
     }

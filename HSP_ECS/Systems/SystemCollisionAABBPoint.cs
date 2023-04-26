@@ -93,6 +93,22 @@ namespace HSP_ECS
                     if (point.Y >= collisionTopLeft.Y && point.Y <= collisionBottomRight.Y)
                     {
                         Collision col = new Collision();
+
+                        if (pEntity1.Name == "player" && pEntity2.Name.Contains("enemy"))
+                        {
+                            col.entity1 = pEntity1;
+                            col.entity2 = pEntity2;
+                            col.type = CollisionType.PLAYER_ENEMY;
+                            mCollisionManager.RegisterCollision(col);
+                        }
+                        else if (pEntity1.Name == "player" && pEntity2.Name.Contains("end"))
+                        {
+                            col.entity1 = pEntity1;
+                            col.entity2 = pEntity2;
+                            col.type = CollisionType.PLAYER_END;
+                            mCollisionManager.RegisterCollision(col);
+                        }
+
                         col.entity1 = pEntity1;
                         col.entity2 = pEntity2;
                         col.type = CollisionType.POINT_AABB;

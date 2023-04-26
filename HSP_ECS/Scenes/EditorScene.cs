@@ -109,7 +109,10 @@ namespace HSP_ECS
                 }
                 else if (e.Name == "save" && b.LeftClick)
                 {
-                    SaveLevel();
+                    if(mPlayer && mEnd)
+                    {
+                        SaveLevel();
+                    }
                 }
                 else if (e.Name == "back" && b.LeftClick)
                 {
@@ -346,15 +349,11 @@ namespace HSP_ECS
 
         private void SaveLevel()
         {
-            Random rand = new Random();
-            string name = "";
-            for (int i = 0; i < 10; i++)
-            {
-                string rng = rand.Next(0, 255).ToString();
-                name += rng;
-            }
+            string[] files = Directory.GetFiles("Maps/XML");
 
-            XmlWriter xmlW = XmlWriter.Create("Maps/XML/" + name + ".xml");
+            int fileNumber = files.Length + 1;
+
+            XmlWriter xmlW = XmlWriter.Create("Maps/XML/map" + fileNumber + ".xml");
             xmlW.WriteStartElement("map");
 
             for (int y = 0; y < 12; y++)

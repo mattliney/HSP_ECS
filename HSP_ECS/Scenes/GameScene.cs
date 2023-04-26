@@ -16,6 +16,8 @@ namespace HSP_ECS
     public class GameScene : Scene
     {
         Entity mPlayer;
+        ComponentPlayer mPlayerComp;
+        ComponentPosition mPlayerPos;
 
         // parallax varaibles
         ComponentPosition mParallaxNear1;
@@ -23,6 +25,8 @@ namespace HSP_ECS
         ComponentPosition mParallaxFar1;
         ComponentPosition mParallaxFar2;
         int mScreenWidth;
+
+        Texture2D heart;
 
         public GameScene(SceneManager pSceneManager, string pLevelName) : base(pSceneManager)
         {
@@ -32,10 +36,14 @@ namespace HSP_ECS
             // input manager needs to find the player in the list in order to move him.
             mSceneManager.mInputManager.GetPlayer(mSceneManager.mEntityManager);
             mPlayer = mSceneManager.mEntityManager.GetEntity("player");
+            mPlayerComp = (ComponentPlayer)GetComponentHelper.GetComponent("ComponentPlayer", mPlayer);
+            mPlayerPos = (ComponentPosition)GetComponentHelper.GetComponent("ComponentPosition", mPlayer);
 
             // get parallax variables
             GetParallax();
             mScreenWidth = mSceneManager.ScreenWidth;
+
+            heart = mSceneManager.mResourceLoader.GetTexture("heart");
 
             mSceneManager.mSystemCollisionAABBAABB.GetPhysicsObjects(mSceneManager.mEntityManager.Entities);
             mSceneManager.mSystemCollisionAABBPoint.GetPhysicsObjects(mSceneManager.mEntityManager.Entities);
@@ -43,12 +51,21 @@ namespace HSP_ECS
 
         public override void Draw()
         {
+            for(int i = 0; i < mPlayerComp.Health; i++)
+            {
+                mSceneManager.SpriteBatch.Draw(heart, new Vector2((i + 1) * 80, 50), Color.White);
+            }
         }
 
         public override void Update(GameTime pGameTime)
         {
             Parallax(mParallaxFar1, mParallaxFar2);
             Parallax(mParallaxNear1, mParallaxNear2);
+
+            if(mPlayerComp.Health <= 0 || mPlayerPos.Position.Y > 1100)
+            {
+                mSceneManager.ChangeScene(SceneType.TitleScene, "");
+            }
         }
 
         private void GetParallax()

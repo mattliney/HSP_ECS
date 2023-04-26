@@ -1,4 +1,5 @@
 ﻿using HSP_ECS.Components;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -22,21 +23,28 @@ namespace HSP_ECS
         AABB_AABB_RIGHT,
         AABB_AABB_TOP,
         AABB_AABB_BOTTOM,
-        POINT_AABB
+        POINT_AABB,
+        PLAYER_ENEMY,
+        PLAYER_END
     }
 
     public class CollisionManager
     {
         private EntityManager mEntityManager;
+        private SceneManager mSceneManager;
         private List<Collision> mCollisionManifold;
         private Stopwatch clickCooldown;
+        private Stopwatch hurtCooldown;
 
-        public CollisionManager(EntityManager pEntityManager)
+        public CollisionManager(EntityManager pEntityManager, SceneManager pSceneManager)
         {
             mEntityManager = pEntityManager;
-            mCollisionManifold= new List<Collision>();
-            clickCooldown= new Stopwatch();
+            mCollisionManifold = new List<Collision>();
+            clickCooldown = new Stopwatch();
+            hurtCooldown = new Stopwatch();
             clickCooldown.Start();
+            hurtCooldown.Start();
+            mSceneManager = pSceneManager;
         }
 
         public void ProcessCollisions()
@@ -62,6 +70,15 @@ namespace HSP_ECS
                 else if(col.type == CollisionType.POINT_AABB)
                 {
                     RespondPoint_AABB(col);
+                }
+                else if(col.type == CollisionType.PLAYER_ENEMY)
+                {
+                    RespondPlayer_Enemy(col);
+                }
+                else if (col.type == CollisionType.PLAYER_END)
+                {
+                    CameraHelper.cameraMovement = Vector2.Zero;
+                    mSceneManager.ChangeScene(SceneType.TitleScene, "");
                 }
             }
 
@@ -140,6 +157,24 @@ namespace HSP_ECS
 
                 phys.StopAccel();
             }
+        }
+
+        private void RespondPlayer_Enemy(Collision pCol)
+        {
+            ComponentPlayer e1player = (ComponentPlayer)GetComponentHelper.GetComponent("ComponentPlayer", pCol.entity1);
+            if (e1player != null)
+            {
+                if(hurtCooldown.ElapsedMilliseconds >= 1000)
+                {
+                    e1player.Health--;
+                    hurtCooldown.Restart();
+                }
+            }
+        }
+
+        private void RespondPlayer_End()
+        {
+
         }
 
         private void ClearManifold()

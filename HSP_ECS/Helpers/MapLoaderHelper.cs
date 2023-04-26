@@ -248,7 +248,7 @@ namespace HSP_ECS
                     }
                     else if(c == 'E')
                     {
-                        e = new Entity("terrain" + terrainIndex);
+                        e = new Entity("enemy" + terrainIndex);
                         e.AddComponent(new ComponentSpriteSheet(pResources.GetTexture("enemy_sheet"), 64, 64, 3, 200));
                         pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
                         e.AddComponent(pos);
@@ -258,7 +258,7 @@ namespace HSP_ECS
                     else if (c == 'F')
                     {
                         sp = new ComponentSprite(pResources.GetTexture("endflag_static"));
-                        e = new Entity("terrain" + terrainIndex);
+                        e = new Entity("end" + terrainIndex);
                         pos = new ComponentPosition(new Vector2(xOffset * 64, yOffset * 64));
                         e.AddComponent(sp); e.AddComponent(pos);
                         e.AddComponent(new ComponentCollisionAABB(64, 64));
@@ -274,7 +274,7 @@ namespace HSP_ECS
             en.AddComponent(new ComponentSpriteSheet(pResources.GetTexture("player_sheet"), 64, 64, 3, 200));
             en.AddComponent(new ComponentPosition(playerSpawn));
             en.AddComponent(new ComponentPlayer(3));
-            en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 20f));
+            en.AddComponent(new ComponentPhysics(new Vector2(0, 0), 15f));
             en.AddComponent(new ComponentCollisionAABB(64, 64));
             en.AddComponent(new ComponentCollisionPoint(new Vector2(32, 66)));
             en.AddComponent(new ComponentCollisionPoint(new Vector2(49, 66)));

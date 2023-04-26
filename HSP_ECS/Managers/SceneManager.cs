@@ -53,7 +53,7 @@ namespace HSP_ECS
             mSystemManager = new SystemManager();
             mEntityManager = new EntityManager();
             mInputManager = new InputManager(this);
-            mCollisionManager = new CollisionManager(mEntityManager);
+            mCollisionManager = new CollisionManager(mEntityManager, this);
 
             CameraHelper.CameraInit(mScreenWidth);
         }
@@ -95,11 +95,11 @@ namespace HSP_ECS
         {
             SpriteBatch.Begin();
 
-            Render();
-
             GraphicsDevice.Clear(Color.CornflowerBlue);
             mInputManager.ProcessInputs();
             mSystemManager.Action(mEntityManager.Entities, gameTime);
+
+            Render();
 
             SpriteBatch.End();
         }
@@ -126,6 +126,10 @@ namespace HSP_ECS
             else if (pScene == SceneType.GameScene)
             {
                 CurrentScene = new GameScene(this, pFileName);
+            }
+            else if (pScene == SceneType.SelectScene)
+            {
+                CurrentScene = new LevelSelectScene(this);
             }
 
             Updater = CurrentScene.Update;
